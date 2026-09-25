@@ -1,0 +1,43 @@
+/*
+ * ============================================================================
+ *  THÈME DU JUNGLE — palette PROVISOIRE
+ * ============================================================================
+ *  Les couleurs officielles de la marque n'ont pas encore été confirmées.
+ *  Lorsque la charte sera fournie, remplacez UNIQUEMENT les valeurs HEX
+ *  ci-dessous : tout le site (Tailwind + CSS) se mettra à jour.
+ *
+ *  Chaque variable est disponible :
+ *   - en CSS         : var(--color-orange)
+ *   - en Tailwind    : bg-orange, text-cream, border-gold/40, etc.
+ *
+ *  Règles d'usage :
+ *   - Fonds principaux : jungle-dark, deep, night
+ *   - Textes sur fond sombre : cream
+ *   - Sections lumineuses et gourmandes : sand
+ *   - Boutons importants : orange (texte night pour le contraste)
+ *   - Micro-accents, états actifs : gold
+ *   - Soirées / événements, avec parcimonie : coral, purple
+ * ============================================================================
+ */
+@theme {
+  /* On désactive la palette Tailwind par défaut pour rester dans la charte. */
+  --color-*: initial;
+
+  --color-jungle-dark: #123c2a;
+  --color-leaf: #2f7545;
+  --color-deep: #0b241b;
+  --color-night: #101512;
+  --color-sand: #f2e5c8;
+  --color-cream: #fff9ec;
+  --color-orange: #e87535;
+  --color-gold: #f3c34f;
+  --color-coral: #e66c72;
+  --color-purple: #6e4ba1;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Polices (chargées via next/font dans src/app/layout.tsx) */
+  --font-display: var(--font-fredoka), ui-rounded, system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
