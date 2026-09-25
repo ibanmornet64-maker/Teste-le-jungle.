@@ -1,0 +1,86 @@
+import type { Metadata } from "next";
+import { PageHero } from "@/components/sections/PageHero";
+import { ActivityFeature } from "@/components/sections/ActivityFeature";
+import { CtaSection } from "@/components/sections/CtaSection";
+import { ButtonLink } from "@/components/ui/Button";
+import { Icon, type IconName } from "@/components/ui/Icon";
+import { SectionTitle } from "@/components/ui/SectionTitle";
+import { getActivity } from "@/data/activities";
+import { IMAGES } from "@/data/images";
+import { getReservationCta } from "@/lib/reservation";
+
+export const metadata: Metadata = {
+  title: "Bowling à Oloron-Sainte-Marie — 4 pistes",
+  description:
+    "Le Jungle, le bowling d’Oloron-Sainte-Marie : 4 pistes pour une partie entre amis, en famille, un anniversaire ou un afterwork. Demandez votre réservation en ligne.",
+  alternates: { canonical: "/activites/bowling" },
+};
+
+const OCCASIONS: { icon: IconName; title: string; text: string }[] = [
+  { icon: "users", title: "Entre amis", text: "Le classique indémodable : une partie, une revanche, et on refait le match autour d’un verre." },
+  { icon: "cake", title: "Anniversaires", text: "Pour les enfants, les ados ou les adultes, le bowling met tout le monde d’accord." },
+  { icon: "briefcase", title: "Afterworks", text: "Décompresser entre collègues, sur les pistes puis autour d’une planche." },
+  { icon: "star", title: "En famille", text: "Une sortie qui réunit toutes les générations, l’après-midi comme le soir." },
+];
+
+export default function BowlingPage() {
+  const bowling = getActivity("bowling")!;
+  const cta = getReservationCta();
+  return (
+    <>
+      <PageHero
+        eyebrow="Bowling Oloron"
+        title={
+          <>
+            4 pistes, <span className="text-gold">zéro prise de tête</span>
+          </>
+        }
+        lead="Le bowling du Jungle vous attend à Oloron-Sainte-Marie pour une partie entre amis, une sortie en famille, un anniversaire ou un afterwork."
+        image={IMAGES.hero}
+        crumbs={[
+          { name: "Activités", href: "/activites" },
+          { name: "Bowling", href: "/activites/bowling" },
+        ]}
+        actions={
+          <ButtonLink href={cta.href} external={cta.external} size="lg" icon="calendar" iconPosition="left">
+            {cta.label}
+          </ButtonLink>
+        }
+      />
+
+      <div className="bg-deep">
+        <div className="container-jungle">
+          <ActivityFeature activity={bowling} />
+        </div>
+      </div>
+
+      <section className="section-y bg-night" aria-labelledby="occasions-title">
+        <div className="container-jungle">
+          <SectionTitle id="occasions-title" eyebrow="Pour toutes les occasions" title="Un strike pour chaque sortie" align="center" className="mx-auto" />
+          <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {OCCASIONS.map((o, i) => (
+              <li key={o.title} className="rounded-[1.5rem] border border-cream/10 bg-jungle-dark/60 p-6" data-reveal style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}>
+                <Icon name={o.icon} size={30} className="text-gold" />
+                <h3 className="mt-4 text-2xl font-semibold text-cream">{o.title}</h3>
+                <p className="mt-2 text-sm text-cream/75">{o.text}</p>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-10 text-center text-sm text-cream/60">
+            Tarifs, durée des parties et conditions : l’équipe vous renseigne lors de votre demande de réservation.
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <ButtonLink href="/groupes" variant="secondary" icon="arrow-right">
+              Anniversaires & groupes
+            </ButtonLink>
+            <ButtonLink href="/faq" variant="ghost" icon="arrow-right">
+              Questions fréquentes
+            </ButtonLink>
+          </div>
+        </div>
+      </section>
+
+      <CtaSection title="Prêt pour le strike ?" />
+    </>
+  );
+}
