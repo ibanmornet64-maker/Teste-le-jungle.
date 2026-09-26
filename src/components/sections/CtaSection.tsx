@@ -14,7 +14,7 @@ export function CtaSection({ title = "Prêt à entrer dans la jungle ?" }: { tit
       <div aria-hidden className="absolute inset-0 -z-20 bg-night/70" />
       <div aria-hidden className="absolute inset-0 -z-20 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-night)_85%)]" />
       <Glow color="orange" className="animate-drift top-1/2 left-1/2 -z-10 size-[40rem] -translate-x-1/2 -translate-y-1/2 opacity-50" />
-      <Glow color="purple" className="animate-drift -top-20 -right-20 -z-10 size-[30rem] opacity-60" />
+      <Glow color="lime" className="animate-drift -top-20 -right-20 -z-10 size-[30rem] opacity-60" />
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <PalmFrond
           className="animate-sway absolute -top-10 -left-20 h-[26rem] rotate-[130deg] text-night md:h-[36rem]"

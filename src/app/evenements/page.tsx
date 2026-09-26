@@ -26,7 +26,7 @@ export default function EventsPage() {
     <>
       <PageHero
         eyebrow="Agenda"
-        accent="purple"
+        accent="coral"
         title={
           <>
             Les soirées <span className="text-coral">du Jungle</span>

@@ -12,7 +12,7 @@ export function DayTimeline() {
   return (
     <section aria-labelledby="journee-title" className="section-y relative overflow-hidden bg-deep">
       <Glow color="gold" className="-top-40 -left-40 size-[34rem] opacity-25" />
-      <Glow color="purple" className="-right-40 -bottom-40 size-[40rem] opacity-60" />
+      <Glow color="lime" className="-right-40 -bottom-40 size-[40rem] opacity-60" />
 
       <div className="container-jungle relative">
         <SectionTitle

@@ -139,11 +139,10 @@ Toutes sont centralisées dans `src/config/data-to-confirm.ts` (objet `DATA_TO_C
 13. Stationnement
 14. Présence d'un baby-foot
 15. Présence d'un photomaton
-16. Logo officiel
-17. Couleurs officielles
-18. Photos officielles du lieu
-19. Mentions légales : raison sociale, forme juridique, SIRET, RCS, TVA, directeur de publication, hébergeur
-20. **Soirée salsa / bachata** : elle a été annoncée localement mais aucune date n'a pu être vérifiée. Elle est enregistrée en **brouillon non publié** dans `src/data/events.ts`. Renseigner la date puis `published: true`.
+16. Logo officiel : le fichier image en bonne résolution (la palette du site est déjà alignée sur ce logo)
+17. Photos officielles du lieu
+18. Mentions légales : raison sociale, forme juridique, SIRET, RCS, TVA, directeur de publication, hébergeur
+19. **Soirée salsa / bachata** : elle a été annoncée localement mais aucune date n'a pu être vérifiée. Elle est enregistrée en **brouillon non publié** dans `src/data/events.ts`. Renseigner la date puis `published: true`.
 
 ---
 
@@ -151,14 +150,14 @@ Toutes sont centralisées dans `src/config/data-to-confirm.ts` (objet `DATA_TO_C
 
 | Élément | Fichier(s) | Comment |
 |---|---|---|
-| **Couleurs** | `src/styles/theme.css` | Remplacer uniquement les valeurs HEX (`--color-jungle-dark`, `--color-leaf`, `--color-deep`, `--color-night`, `--color-sand`, `--color-cream`, `--color-orange`, `--color-gold`, `--color-coral`, `--color-purple`). Tout le site suit. Passer ensuite `officialColors: true`. |
-| **Logo** | `public/brand/` + `src/config/data-to-confirm.ts` | Déposer 3 fichiers (clair pour les fonds sombres, sombre pour les fonds clairs, compact), puis renseigner `officialLogo: { light, dark, compact }`. Le logo texte provisoire (`src/components/brand/Logo.tsx`) est alors remplacé automatiquement. |
+| **Couleurs** | `src/styles/theme.css` | Palette **alignée sur le logo « Le Jungle Café »** : vert forêt, feuillage, beige du lettrage, orange du tigre, rouge des quilles. Pour ajuster, remplacez uniquement les valeurs HEX (`--color-jungle-dark`, `--color-leaf`, `--color-deep`, `--color-night`, `--color-sand`, `--color-cream`, `--color-orange`, `--color-gold`, `--color-coral`, `--color-lime`) : tout le site suit. |
+| **Logo** | `public/brand/` + `src/config/data-to-confirm.ts` | Déposer le fichier (PNG/WebP/SVG, idéalement ≥ 1000 px de côté), puis renseigner `officialLogo: { src: "/brand/logo-le-jungle-cafe.png", width: 1024, height: 1024 }`. Le badge s'affiche alors dans le header (avec le nom à côté), seul sur mobile, et en grand dans le footer (`src/components/brand/Logo.tsx`). |
 | Favicon | `src/app/icon.svg` | Remplacer par l'icône officielle (SVG ou `icon.png` 512×512). |
-| Couleur du navigateur mobile | `src/app/manifest.ts`, `src/app/layout.tsx` (`viewport.themeColor`) | Mettre la couleur principale officielle. |
+| Couleur du navigateur mobile | `src/app/manifest.ts`, `src/app/layout.tsx` (`viewport.themeColor`) | Déjà réglée sur le vert du logo (`#0c2714`). |
 | Image de partage (réseaux sociaux) | `public/images/temp/og-le-jungle.jpg` et `src/data/images.ts` | 1200×630 px, idéalement avec une vraie photo et le logo. |
 | Polices | `src/fonts/` + `src/app/layout.tsx` | Remplacer les fichiers `.woff2` si la charte impose d'autres polices (2 maximum). |
 
-Le logo actuel est un **logotype typographique temporaire** (« Le Jungle » + feuille). Ce n'est pas un faux logo officiel.
+Tant que `officialLogo` vaut `null`, un logo texte temporaire (« Le Jungle » + feuille) est affiché. Ce n'est pas un faux logo officiel.
 
 ---
 

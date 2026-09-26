@@ -19,7 +19,7 @@ export function Footer() {
       <div className="container-jungle relative">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.1fr]">
           <div>
-            <Logo />
+            <Logo size="lg" />
             <p className="mt-6 font-display text-2xl font-medium text-cream">{SITE.tagline}</p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-cream/65">
               Bowling, billard, fléchettes, pinsas, cocktails et soirées au cœur d’Oloron-Sainte-Marie.

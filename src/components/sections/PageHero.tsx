@@ -18,7 +18,7 @@ type Props = {
   image?: SiteImage | null;
   crumbs?: Crumb[];
   actions?: ReactNode;
-  accent?: "orange" | "purple" | "coral" | "gold";
+  accent?: "orange" | "lime" | "coral" | "gold";
   children?: ReactNode;
   compact?: boolean;
 };

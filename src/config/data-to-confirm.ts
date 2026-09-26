@@ -97,16 +97,17 @@ export const DATA_TO_CONFIRM = {
   hasPhotobooth: false,
 
   /**
-   * Logo officiel. Déposer les fichiers dans /public/brand/ puis renseigner :
-   * { light: "/brand/logo-clair.svg", dark: "/brand/logo-sombre.svg", compact: "/brand/logo-compact.svg" }
-   * - light  : version claire, pour fonds sombres
-   * - dark   : version sombre, pour fonds clairs
-   * - compact: version réduite (menu mobile)
+   * Logo officiel (badge « Le Jungle Café »).
+   * Déposer le fichier dans /public/brand/ (PNG, WebP ou SVG, idéalement
+   * 1000 px de côté ou plus) puis renseigner :
+   *   { src: "/brand/logo-le-jungle-cafe.png", width: 1024, height: 1024 }
+   * Il remplace alors le logo texte temporaire dans le header, le menu mobile
+   * et le footer.
    */
-  officialLogo: null as { light: string; dark: string; compact: string } | null,
+  officialLogo: null as { src: string; width: number; height: number } | null,
 
-  /** Passer à true lorsque src/styles/theme.css contient la charte officielle */
-  officialColors: false,
+  /** Palette de src/styles/theme.css alignée sur le logo officiel */
+  officialColors: true,
 
   /** Les photos du site sont-elles des photos officielles du lieu ? */
   officialPhotos: false,

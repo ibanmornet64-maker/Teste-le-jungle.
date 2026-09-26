@@ -44,7 +44,7 @@ export default async function EventPage({ params }: Params) {
     <>
       <PageHero
         eyebrow={EVENT_TYPES[event.type]}
-        accent="purple"
+        accent="coral"
         title={event.title}
         lead={event.summary}
         image={event.image}

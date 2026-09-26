@@ -43,7 +43,7 @@ export function Hero() {
       {/* Lueurs colorées (dégradés, sans filtre coûteux) */}
       <Glow color="orange" className="animate-drift -bottom-40 -left-32 -z-10 size-[38rem] opacity-70" />
       <Glow
-        color="purple"
+        color="lime"
         className="animate-drift top-[-10%] right-[-10%] -z-10 size-[34rem] opacity-60"
         style={{ ["--drift-x" as string]: "-40px", ["--drift-y" as string]: "30px", ["--drift-duration" as string]: "22s" }}
       />

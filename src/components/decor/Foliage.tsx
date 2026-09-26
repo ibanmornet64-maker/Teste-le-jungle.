@@ -190,7 +190,7 @@ export function Glow({
   color,
   className,
   style,
-}: DecorProps & { color: "orange" | "gold" | "coral" | "purple" | "leaf" }) {
+}: DecorProps & { color: "orange" | "gold" | "coral" | "lime" | "leaf" }) {
   return (
     <div
       aria-hidden

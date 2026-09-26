@@ -28,7 +28,7 @@ export function ActivityFeature({
     <article id={activity.slug} className="relative py-14 md:py-20" aria-labelledby={`${activity.slug}-title`}>
       <div className={cn("grid items-center gap-10 lg:grid-cols-2 lg:gap-16", reverse && "lg:[&>*:first-child]:order-2")}>
         <div className="relative" data-reveal="fade">
-          <Glow color={isEvening ? "purple" : "orange"} className="-bottom-20 -left-20 size-[24rem] opacity-40" />
+          <Glow color={isEvening ? "coral" : "orange"} className="-bottom-20 -left-20 size-[24rem] opacity-40" />
           <div className="img-zoom relative aspect-[4/3] overflow-hidden rounded-[2rem] ring-1 ring-cream/10">
             {activity.image ? (
               <Image

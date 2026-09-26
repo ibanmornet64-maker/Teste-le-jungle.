@@ -1,10 +1,16 @@
 /*
  * ============================================================================
- *  THÈME DU JUNGLE — palette PROVISOIRE
+ *  THÈME DU JUNGLE — palette tirée du logo « Le Jungle Café »
  * ============================================================================
- *  Les couleurs officielles de la marque n'ont pas encore été confirmées.
- *  Lorsque la charte sera fournie, remplacez UNIQUEMENT les valeurs HEX
- *  ci-dessous : tout le site (Tailwind + CSS) se mettra à jour.
+ *  Couleurs relevées sur le logo officiel :
+ *   - fond vert forêt profond          → deep, night, jungle-dark
+ *   - feuillages                       → leaf, lime
+ *   - lettrage crème / beige doré      → sand, cream, gold
+ *   - tigre                            → orange
+ *   - rayures rouges des quilles       → coral
+ *
+ *  Pour ajuster, remplacez UNIQUEMENT les valeurs HEX ci-dessous :
+ *  tout le site (Tailwind + CSS) se met à jour.
  *
  *  Chaque variable est disponible :
  *   - en CSS         : var(--color-orange)
@@ -16,23 +22,24 @@
  *   - Sections lumineuses et gourmandes : sand
  *   - Boutons importants : orange (texte night pour le contraste)
  *   - Micro-accents, états actifs : gold
- *   - Soirées / événements, avec parcimonie : coral, purple
+ *   - Soirées / événements, avec parcimonie : coral
+ *   - Lueurs décoratives (lumière à travers le feuillage) : lime
  * ============================================================================
  */
 @theme {
   /* On désactive la palette Tailwind par défaut pour rester dans la charte. */
   --color-*: initial;
 
-  --color-jungle-dark: #123c2a;
-  --color-leaf: #2f7545;
-  --color-deep: #0b241b;
-  --color-night: #101512;
-  --color-sand: #f2e5c8;
-  --color-cream: #fff9ec;
-  --color-orange: #e87535;
-  --color-gold: #f3c34f;
-  --color-coral: #e66c72;
-  --color-purple: #6e4ba1;
+  --color-jungle-dark: #16401f; /* vert forêt du logo */
+  --color-leaf: #33782e;        /* feuillage */
+  --color-deep: #0c2714;        /* fond du logo */
+  --color-night: #0a1a0e;       /* vert quasi noir */
+  --color-sand: #f1e0b6;        /* lettrage beige */
+  --color-cream: #fcf4e0;       /* lettrage clair */
+  --color-orange: #e2892f;      /* pelage du tigre */
+  --color-gold: #ecc462;        /* reflets dorés du lettrage */
+  --color-coral: #df5f41;       /* rayures rouges des quilles */
+  --color-lime: #8cbf3f;        /* feuilles au soleil (lueurs) */
 
   --color-white: #ffffff;
   --color-black: #000000;

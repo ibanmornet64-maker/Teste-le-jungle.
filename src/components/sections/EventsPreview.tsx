@@ -10,7 +10,7 @@ import { getUpcomingEvents } from "@/data/events";
 export function EventsEmptyState() {
   return (
     <div className="relative isolate overflow-hidden rounded-[2rem] border border-cream/10 bg-jungle-dark/60 px-6 py-14 text-center md:py-20" data-reveal>
-      <Glow color="purple" className="-top-24 left-1/2 -z-10 size-[28rem] -translate-x-1/2 opacity-70" />
+      <Glow color="lime" className="-top-24 left-1/2 -z-10 size-[28rem] -translate-x-1/2 opacity-70" />
       <Glow color="coral" className="-bottom-32 -left-20 -z-10 size-[20rem] opacity-40" />
       <PalmFrond className="absolute -right-10 -bottom-16 -z-10 h-72 rotate-[200deg] text-deep" />
       <span className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-coral text-night">
