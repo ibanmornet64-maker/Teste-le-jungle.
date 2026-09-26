@@ -8,7 +8,7 @@ Bowling (4 pistes), billard (3 tables), fléchettes (2 postes), pinsas, tapas, p
 - **Stack** : Next.js 16 (App Router, React 19, TypeScript), Tailwind CSS 4.
   Aucune librairie lourde : pas de framer-motion, pas de librairie d'icônes, pas de widget Instagram.
 - **Polices** : Fredoka (titres) et Inter (texte), auto-hébergées dans `src/fonts/`, donc aucun appel à Google Fonts.
-- **Hébergement conseillé** : Vercel, ou tout hébergeur Node 20+.
+- **Hébergement** : prêt pour **Vercel** (voir « Mettre en ligne sur Vercel » ci-dessous) ; fonctionne aussi sur tout hébergeur Node 20.9+.
 
 ---
 
@@ -19,8 +19,55 @@ npm install
 cp .env.example .env.local   # puis remplir les variables utiles
 npm run dev                   # http://localhost:3000
 npm run build && npm start    # version de production
-npx eslint src && npx tsc --noEmit   # vérifications
+npm run check                 # vérifications (ESLint + TypeScript)
 ```
+
+---
+
+## Mettre en ligne sur Vercel
+
+Le projet est prêt pour Vercel : aucune configuration technique à faire, Vercel détecte Next.js automatiquement. Le fichier `vercel.json` place les fonctions serveur à Paris (`cdg1`), au plus près des visiteurs.
+
+### Première mise en ligne (≈ 5 minutes)
+
+1. **Mettre le code sur la branche principale.** Sur GitHub, ouvrez la pull request de la branche `arena/…` vers `main`, puis cliquez sur **Merge pull request** → **Confirm merge**. Vercel publie en production la branche `main`.
+2. Allez sur **https://vercel.com** → **Sign Up** → **Continue with GitHub** (plan *Hobby*, gratuit).
+3. **Add New… → Project**. Dans la liste, cliquez sur **Import** à côté du dépôt `Teste-le-jungle.`. S'il n'apparaît pas : **Adjust GitHub App Permissions** et autorisez ce dépôt.
+4. Sur l'écran de configuration, **ne changez rien** : *Framework Preset* = Next.js, *Root Directory* = `./`, les commandes de build restent par défaut.
+5. (Facultatif, possible plus tard) Ouvrez **Environment Variables** et ajoutez celles du tableau ci-dessous.
+6. Cliquez sur **Deploy**. Environ 2 minutes plus tard, le site est en ligne sur `https://<nom-du-projet>.vercel.app`.
+
+### Ensuite, c'est automatique
+
+- Chaque modification poussée sur `main` → **nouvelle mise en production** automatique.
+- Chaque autre branche ou pull request → **adresse de prévisualisation** privée. Ces prévisualisations ne sont **jamais indexées par Google**.
+- Après avoir ajouté ou modifié une variable d'environnement : onglet **Deployments** → **⋯** sur le dernier déploiement → **Redeploy**. Les variables ne s'appliquent qu'aux nouveaux déploiements.
+
+### Variables d'environnement sur Vercel
+
+*Project → Settings → Environment Variables*. Aucune n'est obligatoire pour que le site s'affiche.
+
+| Variable | Quand la remplir |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | Quand vous aurez un nom de domaine, ex. `https://www.lejungle64.fr`. Si vide, l'adresse `.vercel.app` est utilisée automatiquement pour le SEO et le sitemap. |
+| `SITE_NOINDEX` | `true` pour cacher le site de Google, par exemple tant que les photos temporaires sont en place. À retirer pour le lancement. |
+| `RESEND_API_KEY` + `CONTACT_TO_EMAIL` (+ `CONTACT_FROM_EMAIL`) | Pour recevoir les formulaires par email. Sans elles, le formulaire affiche un message clair qui renvoie vers Instagram. |
+| `CONTACT_WEBHOOK_URL` | Alternative à l'email (Make, Zapier, n8n…). |
+| `ADMIN_PREVIEW` | `true` pour consulter temporairement `/admin` en ligne. Cette page n'a pas de mot de passe : pensez à retirer la variable ensuite. |
+
+### Brancher un nom de domaine
+
+*Project → Settings → Domains → Add*, puis saisissez votre domaine (ex. `lejungle64.fr`). Vercel indique les enregistrements DNS à créer chez votre registrar (OVH, Gandi, IONOS…). Le certificat HTTPS est automatique. Renseignez ensuite `NEXT_PUBLIC_SITE_URL` (ou `siteUrl` dans `data-to-confirm.ts`) avec cette adresse, puis faites un **Redeploy**.
+
+### Ce qui est déjà adapté à Vercel
+
+- URL du site détectée automatiquement (production, prévisualisation, domaine personnalisé).
+- Prévisualisations en `noindex` et `robots.txt` bloquant.
+- En-têtes de sécurité complets en ligne : `X-Frame-Options`, `frame-ancestors`, HSTS.
+- Optimisation d'images AVIF/WebP par Vercel.
+- Pages statiques servies depuis le CDN ; accueil, événements et sitemap régénérés toutes les heures (ISR), si bien que les événements passés disparaissent sans redéploiement.
+- API du formulaire en fonction serveur (Node.js, Paris, 15 s max).
+- Version de Node déclarée dans `package.json` (`engines`).
 
 ---
 
@@ -145,7 +192,8 @@ Configurer une des options dans `.env.local` (voir `.env.example`) :
 | `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | Envoi par email via Resend (recommandé) |
 | `CONTACT_WEBHOOK_URL` | Envoi vers un webhook (Make, Zapier, n8n…) |
 | `CONTACT_DELIVERY=console` | Développement uniquement : affiche la demande dans le terminal |
-| `NEXT_PUBLIC_SITE_URL` | URL publique (SEO, sitemap, Open Graph) |
+| `NEXT_PUBLIC_SITE_URL` | URL publique (SEO, sitemap, Open Graph) ; automatique sur Vercel si vide |
+| `SITE_NOINDEX=true` | Empêche l'indexation par Google |
 | `ADMIN_PREVIEW=true` | Rend `/admin` accessible en production (temporairement) |
 
 ---
@@ -156,13 +204,13 @@ Configurer une des options dans `.env.local` (voir `.env.example`) :
   Données structurées Schema.org : `BarOrPub` + `BowlingAlley`, `PostalAddress`, `OpeningHoursSpecification`, `Event` (événements publiés et à venir uniquement), `FAQPage`. Seules les données confirmées y figurent (ni téléphone ni prix inventés).
 - **Accessibilité** : lien d'évitement, navigation clavier complète, focus visibles, menu mobile et lightbox en `dialog` avec piège de focus et fermeture Échap, textes alternatifs, labels, hiérarchie de titres, contrastes (boutons orange ou or avec texte foncé), `prefers-reduced-motion` respecté.
 - **Performance** : images AVIF/WebP responsive avec lazy-loading, seule l'image du hero est préchargée. Polices locales, dimensions fixes (pas de CLS), carte OpenStreetMap chargée uniquement à la demande, pas de vidéo, animations CSS légères.
-- **Sécurité / RGPD** :
+- **Sécurité / RGPD** (aucun outil d'analyse, aucun cookie de suivi) :
   - en-têtes de sécurité dans `next.config.ts` ;
   - aucun cookie de suivi ; la carte n'est chargée qu'après action de l'utilisateur, et le choix est mémorisé localement et modifiable via « Gestion des cookies » ;
   - pages Mentions légales et Politique de confidentialité ;
   - secrets uniquement dans les variables d'environnement.
 
-> **Note X-Frame-Options** : l'en-tête `X-Frame-Options` n'est pas défini, pour permettre la prévisualisation du site dans un iframe pendant la conception. Avant la mise en ligne, vous pouvez ajouter `{ key: "X-Frame-Options", value: "SAMEORIGIN" }` (ou `Content-Security-Policy: frame-ancestors 'self'`) dans `next.config.ts`.
+> **Note X-Frame-Options** : sur Vercel, `X-Frame-Options: SAMEORIGIN`, `Content-Security-Policy: frame-ancestors 'self'` et HSTS sont ajoutés automatiquement. En local et dans les aperçus de développement, ils restent désactivés pour permettre l'affichage en iframe. Chez un autre hébergeur, définissez `STRICT_SECURITY_HEADERS=true` au moment du build.
 
 ---
 

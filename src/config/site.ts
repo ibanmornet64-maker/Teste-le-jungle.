@@ -8,6 +8,32 @@
  */
 import { DATA_TO_CONFIRM } from "./data-to-confirm";
 
+/** Adresse fournie automatiquement par Vercel (sans https://). */
+function vercelHost(): string | undefined {
+  if (process.env.VERCEL_ENV === "production") {
+    return process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL;
+  }
+  return process.env.VERCEL_BRANCH_URL || process.env.VERCEL_URL;
+}
+
+function resolveSiteUrl(): string {
+  const host = vercelHost();
+  const url =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    DATA_TO_CONFIRM.siteUrl ||
+    (host ? `https://${host}` : "http://localhost:3000");
+  return url.replace(/\/$/, "");
+}
+
+/**
+ * Le site peut-il être indexé par Google ?
+ *  - Non sur les déploiements de prévisualisation Vercel (branches, pull requests).
+ *  - Non si SITE_NOINDEX=true (utile tant que les photos temporaires sont en place).
+ *  - Oui sinon.
+ */
+export const SITE_INDEXABLE =
+  process.env.VERCEL_ENV !== "preview" && process.env.SITE_NOINDEX !== "true";
+
 export const SITE = {
   name: "Le Jungle",
   alternateName: "Le Jungle Café",
@@ -17,11 +43,14 @@ export const SITE = {
   promise:
     "Un endroit où l’on peut manger, boire un verre, jouer, rire, se retrouver entre amis ou en famille et prolonger la soirée dans une ambiance inspirée de la jungle.",
 
-  /** URL publique du site (variable d'env > DATA_TO_CONFIRM > localhost) */
-  url:
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    DATA_TO_CONFIRM.siteUrl ??
-    "http://localhost:3000",
+  /**
+   * URL publique du site, par ordre de priorité :
+   *  1. variable d'environnement NEXT_PUBLIC_SITE_URL (ex. https://www.lejungle64.fr)
+   *  2. DATA_TO_CONFIRM.siteUrl
+   *  3. adresse fournie automatiquement par Vercel (xxx.vercel.app)
+   *  4. http://localhost:3000 en local
+   */
+  url: resolveSiteUrl(),
 
   locale: "fr_FR",
 

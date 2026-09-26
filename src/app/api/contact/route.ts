@@ -25,10 +25,15 @@ import {
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+/** Vercel : durée maximale d'exécution de la fonction (secondes). */
+export const maxDuration = 15;
 
 const MAX_BODY = 16 * 1024;
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_PER_WINDOW = 5;
+// Limitation simple en mémoire. Sur Vercel, chaque instance de fonction garde
+// son propre compteur : c'est un frein anti-abus, pas une garantie absolue
+// (le champ piège et le délai minimum complètent la protection).
 const hits = new Map<string, number[]>();
 
 function rateLimited(ip: string): boolean {
@@ -118,7 +123,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Format de requête non pris en charge." }, { status: 415 });
   }
 
-  const ip = (request.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || "local";
+  // Vercel transmet l'IP du visiteur dans x-real-ip / x-forwarded-for.
+  const ip =
+    request.headers.get("x-real-ip")?.trim() ||
+    (request.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() ||
+    "local";
   if (rateLimited(ip)) {
     return NextResponse.json(
       { ok: false, error: "Trop de demandes envoyées. Merci de patienter quelques minutes." },

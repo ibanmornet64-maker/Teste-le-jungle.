@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileActionBar } from "@/components/layout/MobileActionBar";
 import { RevealObserver } from "@/components/layout/RevealObserver";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { SITE } from "@/config/site";
+import { SITE, SITE_INDEXABLE } from "@/config/site";
 import { OG_IMAGE } from "@/data/images";
 import { localBusinessSchema } from "@/lib/schema";
 import "./globals.css";
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     images: [OG_IMAGE.src],
   },
-  robots: { index: true, follow: true },
+  robots: SITE_INDEXABLE ? { index: true, follow: true } : { index: false, follow: false },
   formatDetection: { telephone: false, email: false, address: false },
 };
 
