@@ -7,6 +7,7 @@ import { CONTACT, SITE } from "@/config/site";
 import type { EventItem } from "@/data/events";
 import type { FaqItem } from "@/data/faq";
 import { OG_IMAGE } from "@/data/images";
+import { getBrandLogo } from "@/lib/brand";
 
 const abs = (path: string) => new URL(path, SITE.url).toString();
 export const BUSINESS_ID = `${SITE.url.replace(/\/$/, "")}/#le-jungle`;
@@ -23,6 +24,7 @@ export function localBusinessSchema() {
       "Lieu de loisirs et de convivialité à Oloron-Sainte-Marie : bowling (4 pistes), billard (3 tables), fléchettes (2 postes), pinsas, tapas, goûters, cocktails, mocktails et soirées.",
     url: SITE.url,
     image: abs(OG_IMAGE.src),
+    ...(getBrandLogo() ? { logo: abs(getBrandLogo()!.src) } : {}),
     address: {
       "@type": "PostalAddress",
       streetAddress: SITE.address.street,

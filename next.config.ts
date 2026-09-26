@@ -1,4 +1,26 @@
+import fs from "node:fs";
+import path from "node:path";
 import type { NextConfig } from "next";
+
+/**
+ * Logo officiel détecté automatiquement dans /public/brand/.
+ * Il suffit d'y déposer le fichier (ex. logo.png) : il remplace le logo texte
+ * temporaire partout (header, footer, favicon, données Google).
+ * Priorité au fichier nommé « logo.* », sinon la première image du dossier.
+ * Les fichiers commençant par « _ » ou « . » sont ignorés.
+ */
+function detectBrandLogo(): string {
+  try {
+    const files = fs
+      .readdirSync(path.join(process.cwd(), "public", "brand"))
+      .filter((f) => /\.(png|jpe?g|webp|avif|svg)$/i.test(f) && !/^[._]/.test(f))
+      .sort();
+    const pick = files.find((f) => /^logo\./i.test(f)) ?? files[0];
+    return pick ? `/brand/${encodeURIComponent(pick)}` : "";
+  } catch {
+    return "";
+  }
+}
 
 /**
  * En-têtes de sécurité renforcés : automatiques sur Vercel (VERCEL=1 est
@@ -23,6 +45,9 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  env: {
+    NEXT_PUBLIC_BRAND_LOGO: detectBrandLogo(),
+  },
   // Aperçus distants (tunnels de développement)
   allowedDevOrigins: ["*.e2b.app", "**.e2b.app"],
   images: {

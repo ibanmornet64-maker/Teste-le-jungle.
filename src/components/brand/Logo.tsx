@@ -1,11 +1,12 @@
 /**
  * Zone logo.
- * - Si le logo officiel est renseigné dans DATA_TO_CONFIRM.officialLogo :
+ * - Si un logo officiel est disponible (fichier dans /public/brand/ ou
+ *   DATA_TO_CONFIRM.officialLogo) :
  *   badge « Le Jungle Café » + nom en toutes lettres (lisible même en petit).
  * - Sinon : logo texte TEMPORAIRE (feuille + « Le Jungle »), qui n'est pas un logo officiel.
  */
 import Image from "next/image";
-import { DATA_TO_CONFIRM } from "@/config/data-to-confirm";
+import { getBrandLogo } from "@/lib/brand";
 import { cn } from "@/lib/format";
 
 type Props = {
@@ -52,7 +53,7 @@ function Wordmark({ tone, subline }: { tone: "light" | "dark"; subline: string }
 }
 
 export function Logo({ tone = "light", compact = false, size = "md", className }: Props) {
-  const official = DATA_TO_CONFIRM.officialLogo;
+  const official = getBrandLogo();
 
   if (official) {
     return (
@@ -66,7 +67,7 @@ export function Logo({ tone = "light", compact = false, size = "md", className }
           sizes={size === "lg" ? "96px" : "56px"}
           quality={80}
           className={cn(
-            "shrink-0 rounded-xl object-cover shadow-[0_8px_24px_-10px_rgb(0_0_0/0.8)] ring-1 ring-gold/25",
+            "shrink-0 rounded-xl bg-deep object-contain shadow-[0_8px_24px_-10px_rgb(0_0_0/0.8)] ring-1 ring-gold/25",
             size === "lg" ? "size-20 rounded-2xl" : "size-11 md:size-12",
           )}
         />

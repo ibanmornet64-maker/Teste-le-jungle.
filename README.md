@@ -151,13 +151,20 @@ Toutes sont centralisées dans `src/config/data-to-confirm.ts` (objet `DATA_TO_C
 | Élément | Fichier(s) | Comment |
 |---|---|---|
 | **Couleurs** | `src/styles/theme.css` | Palette **alignée sur le logo « Le Jungle Café »** : vert forêt, feuillage, beige du lettrage, orange du tigre, rouge des quilles. Pour ajuster, remplacez uniquement les valeurs HEX (`--color-jungle-dark`, `--color-leaf`, `--color-deep`, `--color-night`, `--color-sand`, `--color-cream`, `--color-orange`, `--color-gold`, `--color-coral`, `--color-lime`) : tout le site suit. |
-| **Logo** | `public/brand/` + `src/config/data-to-confirm.ts` | Déposer le fichier (PNG/WebP/SVG, idéalement ≥ 1000 px de côté), puis renseigner `officialLogo: { src: "/brand/logo-le-jungle-cafe.png", width: 1024, height: 1024 }`. Le badge s'affiche alors dans le header (avec le nom à côté), seul sur mobile, et en grand dans le footer (`src/components/brand/Logo.tsx`). |
-| Favicon | `src/app/icon.svg` | Remplacer par l'icône officielle (SVG ou `icon.png` 512×512). |
+| **Logo** | `public/brand/` | **Déposer simplement le fichier** (PNG, JPG, WebP ou SVG, carré, idéalement ≥ 500 px), de préférence nommé `logo.png` ou `logo.jpg`. Il est détecté automatiquement (`next.config.ts`) et remplace le logo texte dans le header, le menu mobile, le footer, le favicon, l'icône d'écran d'accueil et les données Google. Aucune ligne de code à modifier. (Option manuelle : `officialLogo` dans `data-to-confirm.ts`.) |
+| Favicon et icône mobile | `src/app/icon.tsx`, `src/app/apple-icon.tsx` | Générés automatiquement à partir du logo de `public/brand/` (PNG/JPG/SVG). Sans logo : feuille orange. |
 | Couleur du navigateur mobile | `src/app/manifest.ts`, `src/app/layout.tsx` (`viewport.themeColor`) | Déjà réglée sur le vert du logo (`#0c2714`). |
 | Image de partage (réseaux sociaux) | `public/images/temp/og-le-jungle.jpg` et `src/data/images.ts` | 1200×630 px, idéalement avec une vraie photo et le logo. |
 | Polices | `src/fonts/` + `src/app/layout.tsx` | Remplacer les fichiers `.woff2` si la charte impose d'autres polices (2 maximum). |
 
-Tant que `officialLogo` vaut `null`, un logo texte temporaire (« Le Jungle » + feuille) est affiché. Ce n'est pas un faux logo officiel.
+Tant qu'aucun logo n'est présent dans `public/brand/`, un logo texte temporaire (« Le Jungle » + feuille) est affiché. Ce n'est pas un faux logo officiel.
+
+### Ajouter le logo depuis le site GitHub (sans rien installer)
+1. Sur la page du dépôt, choisissez la branche utilisée par Vercel (en principe `main`).
+2. Ouvrez le dossier `public`, puis `brand`.
+3. Cliquez sur **Add file → Upload files** et glissez le fichier du logo.
+4. Cliquez sur **Commit changes**.
+5. Vercel redéploie tout seul : le logo apparaît en 1 à 2 minutes.
 
 ---
 

@@ -9,6 +9,7 @@ import { DATA_TO_CONFIRM, DATA_TO_CONFIRM_LABELS } from "@/config/data-to-confir
 import { EVENTS } from "@/data/events";
 import { IMAGES } from "@/data/images";
 import { MENU } from "@/data/menu";
+import { getBrandLogo } from "@/lib/brand";
 
 export const metadata: Metadata = {
   title: "Administration — informations à confirmer",
@@ -32,7 +33,9 @@ export default function AdminPage() {
   if (process.env.NODE_ENV === "production" && process.env.ADMIN_PREVIEW !== "true") notFound();
 
   const entries = Object.entries(DATA_TO_CONFIRM);
-  const missing = entries.filter(([, v]) => !isFilled(v)).length;
+  // Le logo peut aussi être détecté automatiquement dans /public/brand/.
+  const filled = (key: string, v: unknown) => (key === "officialLogo" ? getBrandLogo() !== null : isFilled(v));
+  const missing = entries.filter(([k, v]) => !filled(k, v)).length;
   const tempImages = Object.entries(IMAGES).filter(([, img]) => img?.temporary);
   const emptySlots = Object.entries(IMAGES).filter(([, img]) => img === null);
   const drafts = EVENTS.filter((e) => !e.published || !e.date);
@@ -65,7 +68,7 @@ export default function AdminPage() {
             </thead>
             <tbody className="divide-y divide-cream/10">
               {entries.map(([key, value]) => {
-                const ok = isFilled(value);
+                const ok = filled(key, value);
                 const half = !ok && partial(value);
                 return (
                   <tr key={key} className="bg-deep/60">
