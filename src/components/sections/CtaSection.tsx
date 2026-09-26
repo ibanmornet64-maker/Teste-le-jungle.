@@ -3,11 +3,11 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Glow, MonsteraLeaf, PalmFrond } from "@/components/decor/Foliage";
 import { SITE, directionsUrl } from "@/config/site";
 import { IMAGES } from "@/data/images";
-import { getReservationCta } from "@/lib/reservation";
+import { getPrimaryAction } from "@/lib/contact-actions";
 
 /** Grand appel à l'action « Prêt à entrer dans la jungle ? » */
 export function CtaSection({ title = "Prêt à entrer dans la jungle ?" }: { title?: string }) {
-  const cta = getReservationCta();
+  const cta = getPrimaryAction();
   return (
     <section aria-labelledby="cta-title" className="grain relative isolate overflow-hidden bg-night py-28 md:py-40">
       <Image src={IMAGES.soirees.src} alt="" fill sizes="100vw" className="-z-30 object-cover" />
@@ -34,15 +34,17 @@ export function CtaSection({ title = "Prêt à entrer dans la jungle ?" }: { tit
           {SITE.tagline} On vous attend au 57 rue Carrerot.
         </p>
         <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap" data-reveal style={{ ["--reveal-delay" as string]: "200ms" }}>
-          <ButtonLink href={cta.href} external={cta.external} size="lg" icon="calendar" iconPosition="left" ariaLabel={cta.label}>
-            {cta.shortLabel}
+          <ButtonLink href={cta.href} external={cta.external} size="lg" icon={cta.icon} iconPosition="left" >
+            {cta.label}
           </ButtonLink>
           <ButtonLink href={directionsUrl} variant="secondary" size="lg" icon="route" iconPosition="left" ariaLabel="Voir l’itinéraire">
             Voir l’itinéraire
           </ButtonLink>
-          <ButtonLink href={SITE.social.instagram.url} variant="secondary" size="lg" icon="instagram" iconPosition="left" ariaLabel="Nous suivre sur Instagram">
-            Nous suivre sur Instagram
-          </ButtonLink>
+          {cta.id !== "instagram" && (
+            <ButtonLink href={SITE.social.instagram.url} variant="secondary" size="lg" icon="instagram" iconPosition="left" ariaLabel="Nous suivre sur Instagram">
+              Nous suivre sur Instagram
+            </ButtonLink>
+          )}
         </div>
       </div>
     </section>

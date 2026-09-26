@@ -60,7 +60,7 @@ export default function FaqPage() {
 
           <div className="mt-14 text-center" data-reveal>
             <p className="text-cream/75">Vous ne trouvez pas votre réponse ?</p>
-            <ButtonLink href="/contact#formulaire" className="mt-4" icon="arrow-right">
+            <ButtonLink href="/contact#nous-ecrire" className="mt-4" icon="arrow-right">
               Posez-nous la question
             </ButtonLink>
           </div>

@@ -7,7 +7,7 @@ import { Icon, type IconName } from "@/components/ui/Icon";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { getActivity } from "@/data/activities";
 import { IMAGES } from "@/data/images";
-import { getReservationCta } from "@/lib/reservation";
+import { getPrimaryAction } from "@/lib/contact-actions";
 
 export const metadata: Metadata = {
   title: "Bowling à Oloron-Sainte-Marie — 4 pistes",
@@ -25,7 +25,7 @@ const OCCASIONS: { icon: IconName; title: string; text: string }[] = [
 
 export default function BowlingPage() {
   const bowling = getActivity("bowling")!;
-  const cta = getReservationCta();
+  const cta = getPrimaryAction();
   return (
     <>
       <PageHero
@@ -42,7 +42,7 @@ export default function BowlingPage() {
           { name: "Bowling", href: "/activites/bowling" },
         ]}
         actions={
-          <ButtonLink href={cta.href} external={cta.external} size="lg" icon="calendar" iconPosition="left">
+          <ButtonLink href={cta.href} external={cta.external} size="lg" icon={cta.icon} iconPosition="left">
             {cta.label}
           </ButtonLink>
         }
@@ -67,7 +67,7 @@ export default function BowlingPage() {
             ))}
           </ul>
           <p className="mt-10 text-center text-sm text-cream/60">
-            Tarifs, durée des parties et conditions : l’équipe vous renseigne lors de votre demande de réservation.
+            Tarifs, durée des parties et conditions : l’équipe vous renseigne quand vous la contactez pour réserver.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <ButtonLink href="/groupes" variant="secondary" icon="arrow-right">

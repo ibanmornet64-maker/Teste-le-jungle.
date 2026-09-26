@@ -139,8 +139,3 @@ export const ACTIVITIES: Activity[] = [
 
 export const visibleActivities = ACTIVITIES.filter((a) => a.visible);
 export const getActivity = (slug: string) => ACTIVITIES.find((a) => a.slug === slug);
-
-/** Activités « jouables » (hors soirées), utilisées dans les formulaires. */
-export const GAME_ACTIVITIES = visibleActivities
-  .filter((a) => a.slug !== "soirees")
-  .map((a) => a.name);

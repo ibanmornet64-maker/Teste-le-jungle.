@@ -1,10 +1,10 @@
-import { EventCard } from "@/components/cards/EventCard";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { Glow, PalmFrond } from "@/components/decor/Foliage";
 import { SITE } from "@/config/site";
 import { getUpcomingEvents } from "@/data/events";
+import { UpcomingEventsGrid } from "./UpcomingOnly";
 
 /** État vide élégant, réutilisé sur la page Événements. */
 export function EventsEmptyState() {
@@ -56,15 +56,7 @@ export function EventsPreview() {
         </div>
 
         <div className="mt-12">
-          {events.length === 0 ? (
-            <EventsEmptyState />
-          ) : (
-            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {events.map((e) => (
-                <EventCard key={e.slug} event={e} />
-              ))}
-            </div>
-          )}
+          <UpcomingEventsGrid events={events} empty={<EventsEmptyState />} />
         </div>
       </div>
     </section>

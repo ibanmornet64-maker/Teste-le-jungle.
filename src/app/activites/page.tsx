@@ -8,7 +8,7 @@ import { Icon } from "@/components/ui/Icon";
 import { LaneLines } from "@/components/decor/Foliage";
 import { visibleActivities } from "@/data/activities";
 import { IMAGES } from "@/data/images";
-import { getReservationCta } from "@/lib/reservation";
+import { getPrimaryAction } from "@/lib/contact-actions";
 
 export const metadata: Metadata = {
   title: "Activités — bowling, billard et fléchettes à Oloron",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default function ActivitiesPage() {
-  const cta = getReservationCta();
+  const cta = getPrimaryAction();
   return (
     <>
       <PageHero
@@ -33,7 +33,7 @@ export default function ActivitiesPage() {
         crumbs={[{ name: "Activités", href: "/activites" }]}
         actions={
           <>
-            <ButtonLink href={cta.href} external={cta.external} size="lg" icon="calendar" iconPosition="left">
+            <ButtonLink href={cta.href} external={cta.external} size="lg" icon={cta.icon} iconPosition="left">
               {cta.label}
             </ButtonLink>
             <ButtonLink href="/groupes" variant="secondary" size="lg" icon="arrow-right">

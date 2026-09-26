@@ -10,8 +10,9 @@ import { SITE, fullAddress } from "@/config/site";
 import { EVENTS, EVENT_TYPES, getEvent, isUpcoming } from "@/data/events";
 import { formatDateLong, formatTime } from "@/lib/format";
 import { eventSchema } from "@/lib/schema";
+import { getEventBookingAction } from "@/lib/contact-actions";
+import { UpcomingOnly } from "@/components/sections/UpcomingOnly";
 
-export const revalidate = 3600;
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -38,7 +39,7 @@ export default async function EventPage({ params }: Params) {
   const event = getEvent(slug);
   if (!event || !isUpcoming(event)) notFound();
 
-  const booking = event.reservationUrl ?? `/reserver?evenement=${encodeURIComponent(event.slug)}`;
+  const booking = getEventBookingAction(event);
 
   return (
     <>
@@ -54,9 +55,14 @@ export default async function EventPage({ params }: Params) {
         ]}
         actions={
           (event.bookable || event.reservationUrl) && (
-            <ButtonLink href={booking} size="lg" icon="calendar" iconPosition="left">
-              Réserver
-            </ButtonLink>
+            <UpcomingOnly
+              date={event.date!}
+              fallback={<p className="rounded-full border border-cream/20 px-5 py-3 text-sm font-semibold text-cream/80">Cet événement est terminé.</p>}
+            >
+              <ButtonLink href={booking.href} external={booking.external} size="lg" icon={booking.icon} iconPosition="left">
+                {booking.label}
+              </ButtonLink>
+            </UpcomingOnly>
           )
         }
       />
@@ -95,9 +101,11 @@ export default async function EventPage({ params }: Params) {
             </ul>
             <div className="mt-7 flex flex-col gap-3">
               {(event.bookable || event.reservationUrl) && (
-                <ButtonLink href={booking} icon="calendar" iconPosition="left">
-                  Réserver
-                </ButtonLink>
+                <UpcomingOnly date={event.date!}>
+                  <ButtonLink href={booking.href} external={booking.external} icon={booking.icon} iconPosition="left" className="w-full">
+                    {booking.label}
+                  </ButtonLink>
+                </UpcomingOnly>
               )}
               <ButtonLink href={SITE.social.instagram.url} variant="secondary" icon="instagram" iconPosition="left" ariaLabel="Voir sur Instagram">
                 Voir sur Instagram

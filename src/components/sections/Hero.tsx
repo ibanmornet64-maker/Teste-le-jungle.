@@ -5,13 +5,13 @@ import { Parallax } from "@/components/ui/Parallax";
 import { Glow, MonsteraLeaf, PalmFrond, SimpleLeaf } from "@/components/decor/Foliage";
 import { CONTACT, SITE } from "@/config/site";
 import { IMAGES } from "@/data/images";
-import { getReservationCta } from "@/lib/reservation";
+import { getPrimaryAction } from "@/lib/contact-actions";
 
 const d = (ms: number) => ({ ["--delay" as string]: `${ms}ms` });
 
 /** Hero immersif de la page d'accueil. */
 export function Hero() {
-  const cta = getReservationCta();
+  const cta = getPrimaryAction();
   const img = IMAGES.hero;
 
   return (
@@ -100,8 +100,8 @@ export function Hero() {
           </p>
 
           <div className="animate-rise mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap" style={d(680)}>
-            <ButtonLink href={cta.href} external={cta.external} size="lg" icon="calendar" iconPosition="left" ariaLabel={cta.label}>
-              {cta.shortLabel}
+            <ButtonLink href={cta.href} external={cta.external} size="lg" icon={cta.icon} iconPosition="left" >
+              {cta.label}
             </ButtonLink>
             <ButtonLink href="/activites" variant="secondary" size="lg" icon="arrow-right">
               Explorer les activités

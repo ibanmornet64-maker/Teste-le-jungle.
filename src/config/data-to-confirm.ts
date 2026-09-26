@@ -11,8 +11,8 @@
  *    validée. Le site s'adapte automatiquement (boutons, FAQ, données
  *    structurées Google, footer, etc.).
  *
- *  ➜ La page /admin (visible uniquement en développement, ou si la variable
- *    d'environnement ADMIN_PREVIEW=true) affiche l'état de chaque champ.
+ *  ➜ La page /admin (visible uniquement en local, avec npm run dev)
+ *    affiche l'état de chaque champ.
  * ============================================================================
  */
 
@@ -49,7 +49,7 @@ export const DATA_TO_CONFIRM = {
   /**
    * URL officielle de réservation en ligne (plateforme tierce).
    * - Si renseignée : les boutons affichent « Réserver en ligne ».
-   * - Sinon : les boutons affichent « Demander une réservation » (formulaire).
+   * - Sinon : « Appeler » (si le téléphone est renseigné) ou « Envoyer un message sur Instagram ».
    */
   reservationUrl: null as string | null,
 

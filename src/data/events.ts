@@ -18,8 +18,8 @@
  *    description: "Texte plus long…",
  *    image: IMAGES.soirees,
  *    price: null,                                 // ex. "10 €" — uniquement si confirmé
- *    reservationUrl: null,                        // lien externe, sinon formulaire
- *    bookable: true,                              // affiche « Réserver » (formulaire)
+ *    reservationUrl: null,                        // billetterie externe, sinon Instagram / téléphone
+ *    bookable: true,                              // affiche un bouton « Réserver par message » / « Appeler »
  *    featured: true,                              // mis à la une
  *    published: true,
  *  }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/PageHero";
-import { ContactForm } from "@/components/forms/ContactForm";
+import { ContactOptions } from "@/components/contact/ContactOptions";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { SectionTitle } from "@/components/ui/SectionTitle";
@@ -99,27 +99,20 @@ export default function GroupsPage() {
         </div>
       </section>
 
-      <section id="demande" className="section-y relative overflow-hidden bg-night" aria-labelledby="demande-title">
-        <Glow color="orange" className="top-20 -left-40 size-[34rem] opacity-40" />
-        <div className="container-jungle relative grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
-            <SectionTitle
-              id="demande-title"
-              eyebrow="Demande de groupe"
-              title="Parlez-nous de votre projet"
-              intro="Remplissez le formulaire : l’équipe du Jungle revient vers vous avec les disponibilités et les possibilités. Aucun engagement, aucune réservation automatique."
-            />
-            <ul className="mt-8 space-y-3 text-cream/80" data-reveal>
-              {["Anniversaires enfants, ados et adultes", "Entreprises, afterworks et team building", "Associations, clubs et événements privés"].map((t) => (
-                <li key={t} className="flex gap-3">
-                  <Icon name="check" size={20} className="shrink-0 text-gold" /> {t}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <ContactForm variant="group" />
-        </div>
-      </section>
+      <ContactOptions
+        id="demande"
+        eyebrow="Demande de groupe"
+        title="Parlez-nous de votre projet"
+        intro="Anniversaire, afterwork, team building, club ou soirée privée : envoyez un message à l’équipe du Jungle, elle revient vers vous avec les disponibilités et les possibilités. Sans engagement."
+        checklist={[
+          "Le type d’événement (anniversaire, entreprise, association…)",
+          "La date souhaitée",
+          "Le nombre de participants",
+          "Les activités qui vous tentent : bowling, billard, fléchettes, restauration",
+          "Votre budget, si vous en avez un",
+        ]}
+        template={"Bonjour Le Jungle !\nNous aimerions organiser [type d’événement] le [date] pour [nombre] personnes.\nActivités souhaitées : [bowling / billard / fléchettes / restauration].\nBudget envisagé : [facultatif].\nMerci !"}
+      />
     </>
   );
 }

@@ -18,7 +18,6 @@ export const FOOTER_NAV: NavItem[] = [
   { label: "Anniversaires & groupes", href: "/groupes" },
   { label: "Galerie", href: "/galerie" },
   { label: "FAQ", href: "/faq" },
-  { label: "Réserver", href: "/reserver" },
 ];
 
 export const LEGAL_NAV: NavItem[] = [

@@ -1,7 +1,7 @@
 /**
  * Espace d'administration — « Informations à confirmer ».
- * Visible uniquement en développement, ou en production si la variable
- * d'environnement ADMIN_PREVIEW=true est définie. Jamais indexé.
+ * Outil de travail visible uniquement en local (npm run dev).
+ * En ligne, la page n'existe pas (404) : le site reste 100 % statique.
  */
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -16,8 +16,6 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export const dynamic = "force-dynamic";
-
 function isFilled(value: unknown): boolean {
   if (value === null || value === undefined || value === false || value === "") return false;
   if (Array.isArray(value)) return value.length > 0;
@@ -30,7 +28,7 @@ function partial(value: unknown): boolean {
 }
 
 export default function AdminPage() {
-  if (process.env.NODE_ENV === "production" && process.env.ADMIN_PREVIEW !== "true") notFound();
+  if (process.env.NODE_ENV === "production") notFound();
 
   const entries = Object.entries(DATA_TO_CONFIRM);
   // Le logo peut aussi être détecté automatiquement dans /public/brand/.

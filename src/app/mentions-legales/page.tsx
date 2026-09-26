@@ -54,7 +54,7 @@ export default function LegalNoticePage() {
         )}
         {!CONTACT.phone && !CONTACT.email && (
           <p>
-            Pour toute demande, utilisez notre <Link href="/contact#formulaire">formulaire de contact</Link>.
+            Pour toute demande, <Link href="/contact#nous-ecrire">contactez-nous</Link> (message Instagram {SITE.social.instagram.handle}).
           </p>
         )}
       </div>

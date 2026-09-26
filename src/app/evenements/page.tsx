@@ -8,9 +8,7 @@ import { SITE } from "@/config/site";
 import { getUpcomingEvents } from "@/data/events";
 import { IMAGES } from "@/data/images";
 import { eventSchema } from "@/lib/schema";
-import { getReservationCta } from "@/lib/reservation";
-
-export const revalidate = 3600;
+import { getPrimaryAction } from "@/lib/contact-actions";
 
 export const metadata: Metadata = {
   title: "Événements & soirées à Oloron-Sainte-Marie",
@@ -21,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function EventsPage() {
   const events = getUpcomingEvents();
-  const cta = getReservationCta();
+  const cta = getPrimaryAction();
   return (
     <>
       <PageHero
@@ -40,7 +38,7 @@ export default function EventsPage() {
             <ButtonLink href={SITE.social.instagram.url} size="lg" icon="instagram" iconPosition="left" ariaLabel="Suivre les événements sur Instagram">
               Suivre sur Instagram
             </ButtonLink>
-            <ButtonLink href={cta.href} external={cta.external} variant="secondary" size="lg" icon="calendar" iconPosition="left">
+            <ButtonLink href={cta.href} external={cta.external} variant="secondary" size="lg" icon={cta.icon} iconPosition="left">
               {cta.label}
             </ButtonLink>
           </>

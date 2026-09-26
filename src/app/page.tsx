@@ -10,8 +10,6 @@ import { CtaSection } from "@/components/sections/CtaSection";
 import { PracticalInfo } from "@/components/sections/PracticalInfo";
 
 // Régénère la page toutes les heures (les événements passés disparaissent).
-export const revalidate = 3600;
-
 export default function HomePage() {
   return (
     <>

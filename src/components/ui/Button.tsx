@@ -102,7 +102,7 @@ export function ButtonLink({
   );
 }
 
-/** Bouton d'action (formulaires, modales). */
+/** Bouton d'action (modales, interactions). */
 export function Button({
   variant = "primary",
   size = "md",

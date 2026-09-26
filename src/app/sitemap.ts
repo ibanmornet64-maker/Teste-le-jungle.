@@ -2,8 +2,6 @@ import type { MetadataRoute } from "next";
 import { SITE } from "@/config/site";
 import { getUpcomingEvents } from "@/data/events";
 
-export const revalidate = 3600;
-
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = SITE.url.replace(/\/$/, "");
   const pages: [string, number][] = [
@@ -18,7 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ["/galerie", 0.6],
     ["/faq", 0.6],
     ["/contact", 0.8],
-    ["/reserver", 0.7],
     ["/mentions-legales", 0.2],
     ["/confidentialite", 0.2],
   ];

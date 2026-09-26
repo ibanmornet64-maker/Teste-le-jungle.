@@ -25,36 +25,21 @@ export default function PrivacyPage() {
 
       <div>
         <h2>Données collectées</h2>
-        <p>Nous ne collectons que les données que vous nous transmettez via nos formulaires (contact, réservation, groupes) :</p>
-        <ul>
-          <li>nom et adresse email ;</li>
-          <li>numéro de téléphone (facultatif) ;</li>
-          <li>type de demande, date souhaitée, nombre de personnes, activités, budget éventuel ;</li>
-          <li>le contenu de votre message.</li>
-        </ul>
-      </div>
-
-      <div>
-        <h2>Finalité et base légale</h2>
         <p>
-          Ces données servent uniquement à répondre à votre demande (réservation, organisation d’un événement,
-          question). Le traitement repose sur votre consentement, recueilli par la case à cocher du formulaire.
+          Ce site est un <strong>site vitrine</strong> : il ne contient aucun formulaire, aucun compte utilisateur et
+          aucune base de données. <strong>Aucune donnée personnelle n’est collectée ni enregistrée</strong> par le site.
         </p>
       </div>
 
       <div>
-        <h2>Durée de conservation</h2>
+        <h2>Lorsque vous nous contactez</h2>
         <p>
-          Le site ne stocke pas vos demandes dans une base de données : elles sont transmises directement à l’équipe du
-          Jungle, qui les conserve le temps nécessaire au traitement de votre demande et au suivi de la relation.
+          Les boutons de contact ouvrent directement Instagram, votre application téléphone ou votre messagerie email.
+          Les informations que vous choisissez de nous transmettre par ces moyens servent uniquement à vous répondre
+          (réservation, organisation d’un événement, question). Elles ne sont jamais vendues ni cédées.
         </p>
-      </div>
-
-      <div>
-        <h2>Destinataires</h2>
         <p>
-          Vos données sont destinées exclusivement à l’équipe du Jungle. Elles peuvent transiter par un prestataire
-          technique d’envoi d’emails, agissant pour notre compte. Elles ne sont jamais vendues ni cédées.
+          Les messages envoyés via Instagram sont également soumis à la politique de confidentialité de Meta.
         </p>
       </div>
 
@@ -76,9 +61,8 @@ export default function PrivacyPage() {
         <h2>Vos droits</h2>
         <p>
           Conformément au RGPD, vous disposez d’un droit d’accès, de rectification, d’effacement, de limitation et
-          d’opposition au traitement de vos données. Pour les exercer, contactez-nous via le{" "}
-          <Link href="/contact#formulaire">formulaire de contact</Link>
-          {CONTACT.email && <> ou à l’adresse {CONTACT.email}</>}. Vous pouvez également introduire une réclamation
+          d’opposition au traitement de vos données. Pour les exercer, <Link href="/contact#nous-ecrire">contactez-nous</Link>
+          {CONTACT.email && <> ou écrivez à {CONTACT.email}</>}. Vous pouvez également introduire une réclamation
           auprès de la CNIL (
           <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">
             cnil.fr

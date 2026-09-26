@@ -55,6 +55,10 @@ const nextConfig: NextConfig = {
     qualities: [70, 75, 80],
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
+  // Ancienne page de réservation (formulaire supprimé) → page contact.
+  async redirects() {
+    return [{ source: "/reserver", destination: "/contact", permanent: true }];
+  },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

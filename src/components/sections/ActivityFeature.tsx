@@ -5,7 +5,7 @@ import { Icon } from "@/components/ui/Icon";
 import { BowlingDots, Glow } from "@/components/decor/Foliage";
 import type { Activity } from "@/data/activities";
 import { cn } from "@/lib/format";
-import { getReservationCta } from "@/lib/reservation";
+import { getPrimaryAction } from "@/lib/contact-actions";
 
 /**
  * Présentation détaillée d'une activité : grande image, description,
@@ -20,7 +20,7 @@ export function ActivityFeature({
   reverse?: boolean;
   headingLevel?: "h2" | "h3";
 }) {
-  const cta = getReservationCta();
+  const cta = getPrimaryAction();
   const H = headingLevel;
   const isEvening = activity.slug === "soirees";
 
@@ -100,7 +100,7 @@ export function ActivityFeature({
                 Voir les événements
               </ButtonLink>
             ) : (
-              <ButtonLink href={cta.href} external={cta.external} icon="calendar" iconPosition="left">
+              <ButtonLink href={cta.href} external={cta.external} icon={cta.icon} iconPosition="left">
                 {cta.label}
               </ButtonLink>
             )}

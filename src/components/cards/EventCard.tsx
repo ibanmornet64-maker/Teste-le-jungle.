@@ -4,13 +4,14 @@ import { Icon } from "@/components/ui/Icon";
 import { ButtonLink } from "@/components/ui/Button";
 import { ShareButton } from "@/components/ui/ShareButton";
 import { EVENT_TYPES, type EventItem } from "@/data/events";
+import { getEventBookingAction } from "@/lib/contact-actions";
 import { cn, formatDayMonth, formatTime } from "@/lib/format";
 
 /** Carte événement : date, heure, nom, image, description, tarif (si confirmé), actions. */
 export function EventCard({ event, featured = false }: { event: EventItem; featured?: boolean }) {
   if (!event.date) return null;
   const d = formatDayMonth(event.date);
-  const bookingHref = event.reservationUrl ?? `/reserver?evenement=${encodeURIComponent(event.slug)}`;
+  const booking = getEventBookingAction(event);
 
   return (
     <article
@@ -71,8 +72,8 @@ export function EventCard({ event, featured = false }: { event: EventItem; featu
             En savoir plus
           </ButtonLink>
           {(event.bookable || event.reservationUrl) && (
-            <ButtonLink href={bookingHref} size="sm" ariaLabel={`Réserver : ${event.title}`}>
-              Réserver
+            <ButtonLink href={booking.href} external={booking.external} size="sm" icon={booking.icon} iconPosition="left" ariaLabel={`${booking.label} : ${event.title}`}>
+              {booking.label}
             </ButtonLink>
           )}
           <ShareButton title={event.title} path={`/evenements/${event.slug}`} className="ml-auto" />

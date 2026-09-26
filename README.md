@@ -1,6 +1,6 @@
 # Le Jungle — site officiel (maquette de production)
 
-Site vitrine de **Le Jungle**, 57 rue Carrerot, 64400 Oloron-Sainte-Marie.
+Site vitrine **100 % statique** de **Le Jungle**, 57 rue Carrerot, 64400 Oloron-Sainte-Marie : aucun formulaire, aucune base de données, aucun serveur à configurer.
 *Manger. Jouer. Se retrouver.*
 
 Bowling (4 pistes), billard (3 tables), fléchettes (2 postes), pinsas, tapas, planches, goûters, cocktails, mocktails, soirées et événements.
@@ -8,6 +8,7 @@ Bowling (4 pistes), billard (3 tables), fléchettes (2 postes), pinsas, tapas, p
 - **Stack** : Next.js 16 (App Router, React 19, TypeScript), Tailwind CSS 4.
   Aucune librairie lourde : pas de framer-motion, pas de librairie d'icônes, pas de widget Instagram.
 - **Polices** : Fredoka (titres) et Inter (texte), auto-hébergées dans `src/fonts/`, donc aucun appel à Google Fonts.
+- **Contact** : boutons « Envoyer un message sur Instagram », « Appeler » (dès que le téléphone est renseigné) et email (si renseigné), sans formulaire.
 - **Hébergement** : prêt pour **Vercel** (voir « Mettre en ligne sur Vercel » ci-dessous) ; fonctionne aussi sur tout hébergeur Node 20.9+.
 
 ---
@@ -16,7 +17,7 @@ Bowling (4 pistes), billard (3 tables), fléchettes (2 postes), pinsas, tapas, p
 
 ```bash
 npm install
-cp .env.example .env.local   # puis remplir les variables utiles
+cp .env.example .env.local   # facultatif
 npm run dev                   # http://localhost:3000
 npm run build && npm start    # version de production
 npm run check                 # vérifications (ESLint + TypeScript)
@@ -26,7 +27,7 @@ npm run check                 # vérifications (ESLint + TypeScript)
 
 ## Mettre en ligne sur Vercel
 
-Le projet est prêt pour Vercel : aucune configuration technique à faire, Vercel détecte Next.js automatiquement. Le fichier `vercel.json` place les fonctions serveur à Paris (`cdg1`), au plus près des visiteurs.
+Le projet est prêt pour Vercel : aucune configuration technique à faire, Vercel détecte Next.js automatiquement. Toutes les pages sont générées à l'avance et servies depuis le CDN de Vercel : il n'y a aucune fonction serveur ni aucun service externe à configurer.
 
 ### Première mise en ligne (≈ 5 minutes)
 
@@ -51,9 +52,6 @@ Le projet est prêt pour Vercel : aucune configuration technique à faire, Verce
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | Quand vous aurez un nom de domaine, ex. `https://www.lejungle64.fr`. Si vide, l'adresse `.vercel.app` est utilisée automatiquement pour le SEO et le sitemap. |
 | `SITE_NOINDEX` | `true` pour cacher le site de Google, par exemple tant que les photos temporaires sont en place. À retirer pour le lancement. |
-| `RESEND_API_KEY` + `CONTACT_TO_EMAIL` (+ `CONTACT_FROM_EMAIL`) | Pour recevoir les formulaires par email. Sans elles, le formulaire affiche un message clair qui renvoie vers Instagram. |
-| `CONTACT_WEBHOOK_URL` | Alternative à l'email (Make, Zapier, n8n…). |
-| `ADMIN_PREVIEW` | `true` pour consulter temporairement `/admin` en ligne. Cette page n'a pas de mot de passe : pensez à retirer la variable ensuite. |
 
 ### Brancher un nom de domaine
 
@@ -65,8 +63,8 @@ Le projet est prêt pour Vercel : aucune configuration technique à faire, Verce
 - Prévisualisations en `noindex` et `robots.txt` bloquant.
 - En-têtes de sécurité complets en ligne : `X-Frame-Options`, `frame-ancestors`, HSTS.
 - Optimisation d'images AVIF/WebP par Vercel.
-- Pages statiques servies depuis le CDN ; accueil, événements et sitemap régénérés toutes les heures (ISR), si bien que les événements passés disparaissent sans redéploiement.
-- API du formulaire en fonction serveur (Node.js, Paris, 15 s max).
+- **Toutes les pages sont statiques** (générées au build), sans API ni fonction serveur.
+- Les événements passés sont masqués directement dans le navigateur des visiteurs : ils disparaissent le lendemain, sans redéploiement.
 - Version de Node déclarée dans `package.json` (`engines`).
 
 ---
@@ -84,6 +82,7 @@ Tout le contenu est centralisé : **aucune page n'a besoin d'être modifiée** p
 | Activités (bowling, billard, fléchettes, soirées) | `src/data/activities.ts` |
 | Carte : catégories, plats, prix, allergènes, badge végétarien | `src/data/menu.ts` |
 | **Événements** | `src/data/events.ts` |
+| **Boutons de contact** (ordre : réservation en ligne, appel, Instagram, email) | `src/lib/contact-actions.ts` |
 | Galerie | `src/data/gallery.ts` |
 | Photos (toutes les images du site) | `src/data/images.ts` |
 | FAQ | `src/data/faq.ts` |
@@ -110,7 +109,7 @@ Les événements passés disparaissent **automatiquement** (fuseau Europe/Paris)
 Seules les catégories avec `confirmed: true` s'affichent. Tant qu'aucun plat n'est saisi, la page présente les grandes familles sans aucun prix, avec les boutons « Demander la carte » et « Découvrir la carte sur place ». Un plat accepte : nom, description, photo, prix, allergènes, badge végétarien.
 
 ### Espace d'administration `/admin`
-Il est visible en développement, ou en production si `ADMIN_PREVIEW=true` (page non indexée). Il récapitule :
+Il n'est visible **qu'en local** (`npm run dev`, puis http://localhost:3000/admin). En ligne, la page n'existe pas. Il récapitule :
 - l'état de chaque information à confirmer (✓ renseigné / ✕ à confirmer) ;
 - les visuels temporaires à remplacer ;
 - les événements en brouillon ;
@@ -183,38 +182,34 @@ Next.js génère automatiquement les versions AVIF/WebP responsive. Aucun conten
 
 ---
 
-## 6. Formulaires (contact, réservation, groupes)
+## 6. Contact et réservations (sans formulaire)
 
-- Validation côté navigateur **et** côté serveur (`src/lib/contact-schema.ts`, `src/app/api/contact/route.ts`), avec des messages d'erreur clairs par champ.
-- Anti-spam : champ piège invisible, délai minimum de remplissage, limitation par IP, JSON obligatoire, taille maximale.
-- Consentement RGPD obligatoire, et échappement HTML de toutes les données envoyées par email.
-- **Aucune réservation n'est confirmée automatiquement** : le message de confirmation précise que l'équipe recontactera le client.
-- **Aucun envoi silencieux** : sans configuration, le formulaire affiche une erreur explicite et renvoie vers Instagram.
+Le site ne collecte ni n'enregistre aucune donnée. Les boutons ouvrent directement les applications du visiteur :
 
-Configurer une des options dans `.env.local` (voir `.env.example`) :
+| Bouton | Quand il apparaît | Lien |
+|---|---|---|
+| **Réserver en ligne** | si `reservationUrl` est renseignée | plateforme de réservation externe |
+| **Appeler** | si `phone` est renseigné | `tel:` (ouvre l'appli téléphone) |
+| **Envoyer un message sur Instagram** | toujours | `https://ig.me/m/lejungle64` (ouvre la messagerie Instagram) |
+| **Envoyer un email** | si `email` est renseigné | `mailto:` |
 
-| Variable | Rôle |
-|---|---|
-| `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | Envoi par email via Resend (recommandé) |
-| `CONTACT_WEBHOOK_URL` | Envoi vers un webhook (Make, Zapier, n8n…) |
-| `CONTACT_DELIVERY=console` | Développement uniquement : affiche la demande dans le terminal |
-| `NEXT_PUBLIC_SITE_URL` | URL publique (SEO, sitemap, Open Graph) ; automatique sur Vercel si vide |
-| `SITE_NOINDEX=true` | Empêche l'indexation par Google |
-| `ADMIN_PREVIEW=true` | Rend `/admin` accessible en production (temporairement) |
+- Le **bouton principal** (header, hero, barre mobile, bas de page, activités) prend automatiquement le premier disponible de cette liste. Aujourd'hui, c'est **« Envoyer un message sur Instagram »** ; dès que le téléphone sera renseigné dans `data-to-confirm.ts`, ce sera **« Appeler »**, avec Instagram en second choix.
+- Les pages **Contact** et **Groupes** présentent tous les moyens de contact, la liste des infos à préciser (date, nombre de personnes, activités…) et, pour les groupes, un **message type à copier** en un clic.
+- Le texte de ces boutons se modifie dans `src/lib/contact-actions.ts`.
 
 ---
 
 ## 7. SEO, accessibilité, performance, sécurité
 
-- **SEO** : titres et descriptions par page, Open Graph, `sitemap.xml`, `robots.txt` (`/admin` et `/api` exclus), fil d'Ariane.
+- **SEO** : titres et descriptions par page, Open Graph, `sitemap.xml`, `robots.txt` (`/admin` exclu), fil d'Ariane.
   Données structurées Schema.org : `BarOrPub` + `BowlingAlley`, `PostalAddress`, `OpeningHoursSpecification`, `Event` (événements publiés et à venir uniquement), `FAQPage`. Seules les données confirmées y figurent (ni téléphone ni prix inventés).
 - **Accessibilité** : lien d'évitement, navigation clavier complète, focus visibles, menu mobile et lightbox en `dialog` avec piège de focus et fermeture Échap, textes alternatifs, labels, hiérarchie de titres, contrastes (boutons orange ou or avec texte foncé), `prefers-reduced-motion` respecté.
 - **Performance** : images AVIF/WebP responsive avec lazy-loading, seule l'image du hero est préchargée. Polices locales, dimensions fixes (pas de CLS), carte OpenStreetMap chargée uniquement à la demande, pas de vidéo, animations CSS légères.
 - **Sécurité / RGPD** (aucun outil d'analyse, aucun cookie de suivi) :
   - en-têtes de sécurité dans `next.config.ts` ;
   - aucun cookie de suivi ; la carte n'est chargée qu'après action de l'utilisateur, et le choix est mémorisé localement et modifiable via « Gestion des cookies » ;
-  - pages Mentions légales et Politique de confidentialité ;
-  - secrets uniquement dans les variables d'environnement.
+  - aucune donnée personnelle collectée par le site (pas de formulaire) ;
+  - pages Mentions légales et Politique de confidentialité.
 
 > **Note X-Frame-Options** : sur Vercel, `X-Frame-Options: SAMEORIGIN`, `Content-Security-Policy: frame-ancestors 'self'` et HSTS sont ajoutés automatiquement. En local et dans les aperçus de développement, ils restent désactivés pour permettre l'affichage en iframe. Chez un autre hébergeur, définissez `STRICT_SECURITY_HEADERS=true` au moment du build.
 
@@ -224,19 +219,19 @@ Configurer une des options dans `.env.local` (voir `.env.example`) :
 
 ```
 src/
-  app/                 pages (App Router) + API /api/contact, sitemap, robots, manifest, icon
+  app/                 pages (App Router), sitemap, robots, manifest, icônes
   components/
     brand/             Logo (clair / sombre / compact)
     cards/             ActivityCard, FoodCard, EventCard
     decor/             feuillages SVG, halos lumineux
-    forms/             ContactForm, ReservationForm
+    contact/           ContactOptions (boutons de contact), CopyMessage (message type)
     layout/            Header, Footer, barre d'actions mobile, gestion des cookies
     sections/          Hero, sections de l'accueil, Gallery, PracticalInfo, MapEmbed…
     seo/               JSON-LD
     ui/                Button, SectionTitle, Lightbox, Modal, OpeningHours, Icon…
   config/              site.ts, navigation.ts, data-to-confirm.ts
   data/                contenus éditables (activités, carte, événements, FAQ…)
-  lib/                 validation, Schema.org, consentement, utilitaires
+  lib/                 boutons de contact, Schema.org, consentement, utilitaires
   styles/theme.css     palette
   fonts/               polices locales
 public/images/temp/    visuels temporaires (à remplacer)
@@ -257,7 +252,6 @@ public/images/temp/    visuels temporaires (à remplacer)
 | Galerie | `/galerie` |
 | FAQ | `/faq` |
 | Contact & accès | `/contact` |
-| Réserver | `/reserver` |
 | Mentions légales | `/mentions-legales` |
 | Politique de confidentialité | `/confidentialite` |
-| Espace d'administration (non public) | `/admin` |
+| Espace d'administration (en local uniquement) | `/admin` |

@@ -14,7 +14,7 @@ export type FaqItem = {
 };
 
 const ASK_TEAM = "Contactez directement Le Jungle pour connaître les conditions actuelles.";
-const contactLink = { label: "Contacter Le Jungle", href: "/contact" };
+const contactLink = { label: "Contacter Le Jungle", href: "/contact#nous-ecrire" };
 
 const hoursAnswer = CONTACT.hoursVisible
   ? `Le Jungle est ouvert ${SITE.hours.summary.toLowerCase()}.${
@@ -47,8 +47,12 @@ export const FAQ: FaqItem[] = [
     question: "Peut-on réserver une piste ?",
     answer: DATA_TO_CONFIRM.reservationUrl
       ? "Oui, vous pouvez réserver directement en ligne."
-      : "Vous pouvez envoyer une demande de réservation grâce à notre formulaire. L’équipe du Jungle vous recontacte pour confirmer la disponibilité : la réservation n’est validée qu’après sa confirmation.",
-    link: { label: "Faire une demande", href: DATA_TO_CONFIRM.reservationUrl ?? "/reserver" },
+      : CONTACT.phone
+        ? "Appelez Le Jungle ou envoyez un message sur Instagram en précisant la date, l’heure et le nombre de joueurs. La réservation est validée une fois confirmée par l’équipe."
+        : "Envoyez un message sur Instagram au Jungle en précisant la date, l’heure et le nombre de joueurs. La réservation est validée une fois confirmée par l’équipe.",
+    link: DATA_TO_CONFIRM.reservationUrl
+      ? { label: "Réserver en ligne", href: DATA_TO_CONFIRM.reservationUrl }
+      : { label: "Nous contacter", href: "/contact#nous-ecrire" },
   },
   {
     question: "Le lieu est-il adapté aux enfants ?",
@@ -60,13 +64,13 @@ export const FAQ: FaqItem[] = [
   {
     question: "Peut-on organiser un anniversaire ?",
     answer:
-      "Oui, Le Jungle accueille les anniversaires d’enfants, d’ados et d’adultes. Envoyez-nous votre demande avec la date et le nombre de participants : l’équipe vous répond avec les possibilités.",
+      "Oui, Le Jungle accueille les anniversaires d’enfants, d’ados et d’adultes. Envoyez-nous un message avec la date et le nombre de participants : l’équipe vous répond avec les possibilités.",
     link: { label: "Anniversaires & groupes", href: "/groupes" },
   },
   {
     question: "Peut-on organiser un événement d’entreprise ?",
     answer:
-      "Oui : afterworks, team building ou soirée d’équipe. Décrivez votre projet dans le formulaire groupes et l’équipe vous recontacte.",
+      "Oui : afterworks, team building ou soirée d’équipe. Envoyez-nous un message avec votre projet (date, nombre de participants, activités) et l’équipe vous recontacte.",
     link: { label: "Demande pour un groupe", href: "/groupes#demande" },
   },
   {

@@ -8,9 +8,9 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { PalmFrond, SimpleLeaf } from "@/components/decor/Foliage";
 import { MAIN_NAV } from "@/config/navigation";
-import { CONTACT, SITE, directionsUrl, phoneHref } from "@/config/site";
+import { CONTACT, SITE, directionsUrl } from "@/config/site";
 import { cn } from "@/lib/format";
-import { getReservationCta } from "@/lib/reservation";
+import { getPrimaryAction, getSecondaryAction } from "@/lib/contact-actions";
 import { useFocusTrap } from "@/lib/use-focus-trap";
 
 const isActive = (pathname: string, href: string) =>
@@ -21,7 +21,8 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
-  const cta = getReservationCta();
+  const cta = getPrimaryAction();
+  const secondary = getSecondaryAction();
   const close = useCallback(() => setOpen(false), []);
 
   useEffect(() => {
@@ -90,20 +91,24 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2 md:gap-3">
-            <a
-              href={SITE.social.instagram.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden size-11 items-center justify-center rounded-full text-cream/85 transition-colors hover:bg-cream/10 hover:text-gold md:inline-flex"
-              aria-label="Instagram @lejungle64 (nouvel onglet)"
-            >
-              <Icon name="instagram" size={22} />
-            </a>
+            {cta.id !== "instagram" && (
+              <a
+                href={SITE.social.instagram.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden size-11 items-center justify-center rounded-full text-cream/85 transition-colors hover:bg-cream/10 hover:text-gold md:inline-flex"
+                aria-label="Instagram @lejungle64 (nouvel onglet)"
+              >
+                <Icon name="instagram" size={22} />
+              </a>
+            )}
             <ButtonLink
               href={cta.href}
               external={cta.external}
               size="sm"
-              className="px-5 md:min-h-11 md:px-6 md:text-[0.95rem]"
+              icon={cta.icon}
+              iconPosition="left"
+              className="px-4 sm:px-5 md:min-h-11 md:px-6 md:text-[0.95rem]"
               ariaLabel={cta.label}
             >
               {cta.shortLabel}
@@ -164,20 +169,20 @@ export function Header() {
           </nav>
 
           <div className="mt-auto space-y-3 pt-10">
-            <ButtonLink href={cta.href} external={cta.external} size="lg" className="w-full" icon="calendar" iconPosition="left">
+            <ButtonLink href={cta.href} external={cta.external} size="lg" className="w-full" icon={cta.icon} iconPosition="left">
               {cta.label}
             </ButtonLink>
             <div className="grid grid-cols-2 gap-3">
               <ButtonLink href={directionsUrl} variant="secondary" size="md" icon="route" iconPosition="left" ariaLabel="Itinéraire vers Le Jungle">
                 Itinéraire
               </ButtonLink>
-              {CONTACT.phone ? (
-                <ButtonLink href={phoneHref(CONTACT.phone)} variant="secondary" size="md" icon="phone" iconPosition="left">
-                  Appeler
+              {secondary ? (
+                <ButtonLink href={secondary.href} external={secondary.external} variant="secondary" size="md" icon={secondary.icon} iconPosition="left" ariaLabel={secondary.label}>
+                  {secondary.shortLabel}
                 </ButtonLink>
               ) : (
-                <ButtonLink href={SITE.social.instagram.url} variant="secondary" size="md" icon="instagram" iconPosition="left" ariaLabel="Instagram">
-                  Instagram
+                <ButtonLink href="/contact" variant="secondary" size="md" icon="map-pin" iconPosition="left">
+                  Accès
                 </ButtonLink>
               )}
             </div>

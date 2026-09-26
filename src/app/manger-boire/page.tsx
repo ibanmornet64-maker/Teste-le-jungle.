@@ -8,6 +8,7 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import { MonsteraLeaf } from "@/components/decor/Foliage";
 import { DATA_TO_CONFIRM } from "@/config/data-to-confirm";
 import { IMAGES } from "@/data/images";
+import { getPrimaryAction } from "@/lib/contact-actions";
 import { menuHasItems, visibleMenu } from "@/data/menu";
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
 };
 
 export default function FoodPage() {
+  const askMenu = getPrimaryAction();
   const fullMenu = DATA_TO_CONFIRM.fullMenuAvailable && menuHasItems;
   return (
     <>
@@ -76,7 +78,7 @@ export default function FoodPage() {
                   </p>
                 </div>
                 <div className="mt-8 flex flex-col gap-3">
-                  <ButtonLink href="/contact?sujet=carte#formulaire" icon="arrow-right">
+                  <ButtonLink href={askMenu.href} external={askMenu.external} icon={askMenu.icon} iconPosition="left">
                     Demander la carte
                   </ButtonLink>
                   <ButtonLink href="/contact#acces" variant="secondary" icon="map-pin" iconPosition="left">

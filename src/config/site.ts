@@ -75,6 +75,8 @@ export const SITE = {
     instagram: {
       handle: "@lejungle64",
       url: "https://www.instagram.com/lejungle64/",
+      /** Lien direct vers la messagerie Instagram du Jungle (ouvre l'app sur mobile). */
+      dm: "https://ig.me/m/lejungle64",
     },
   },
 
