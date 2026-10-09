@@ -11,7 +11,7 @@ const TILES: { image: SiteImage; label: string; className: string; sizes: string
   { image: IMAGES.cocktails, label: "Cocktails", className: "col-span-3 row-span-2 sm:col-span-2", sizes: "(min-width: 1024px) 17vw, 50vw" },
   { image: IMAGES.planche, label: "Planches à partager", className: "col-span-3 sm:col-span-2", sizes: "(min-width: 1024px) 17vw, 50vw" },
   { image: IMAGES.gouter, label: "Gaufres & goûters", className: "col-span-3 sm:col-span-2", sizes: "(min-width: 1024px) 17vw, 50vw" },
-  { image: IMAGES.mocktails, label: "Mocktails & smoothies", className: "col-span-3 sm:col-span-2", sizes: "(min-width: 1024px) 17vw, 50vw" },
+  { image: IMAGES.mocktails, label: "Mocktails & smoothies", className: "col-span-6 sm:col-span-2", sizes: "(min-width: 1024px) 17vw, (min-width: 640px) 33vw, 100vw" },
 ];
 
 /** Section chaleureuse « Manger & boire » sur fond sable. */

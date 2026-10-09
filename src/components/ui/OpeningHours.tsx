@@ -18,6 +18,32 @@ const fmt = (t: string) => {
   return m === "00" ? `${h} h` : `${h} h ${m}`;
 };
 
+const WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+/** Regroupe les jours consécutifs aux horaires identiques : « Lundi – Jeudi », « Tous les jours ». */
+function groupDays(spec: ReadonlyArray<{ days: readonly string[]; opens: string; closes: string }>) {
+  const byDay = new Map<string, string>();
+  for (const s of spec) for (const d of s.days) byDay.set(d, `${s.opens}|${s.closes}`);
+  const groups: { from: string; to: string; hours: string }[] = [];
+  for (const d of WEEK) {
+    const hours = byDay.get(d);
+    if (!hours) continue;
+    const last = groups[groups.length - 1];
+    if (last && last.hours === hours && WEEK.indexOf(last.to) === WEEK.indexOf(d) - 1) last.to = d;
+    else groups.push({ from: d, to: d, hours });
+  }
+  return groups.map((g) => {
+    const [opens, closes] = g.hours.split("|");
+    const day =
+      g.from === "Monday" && g.to === "Sunday"
+        ? "Tous les jours"
+        : g.from === g.to
+          ? DAYS_FR[g.from]
+          : `${DAYS_FR[g.from]} – ${DAYS_FR[g.to]}`;
+    return { day, opens, closes };
+  });
+}
+
 /** Horaires : n'affiche rien si les horaires ne sont pas confirmés. */
 export function OpeningHours({ variant = "list", className }: { variant?: "list" | "inline"; className?: string }) {
   if (!CONTACT.hoursVisible) return null;
@@ -31,7 +57,7 @@ export function OpeningHours({ variant = "list", className }: { variant?: "list"
     );
   }
 
-  const rows = SITE.hours.specification.flatMap((s) => s.days.map((d) => ({ day: DAYS_FR[d], opens: s.opens, closes: s.closes })));
+  const rows = groupDays(SITE.hours.specification);
 
   return (
     <div className={className}>

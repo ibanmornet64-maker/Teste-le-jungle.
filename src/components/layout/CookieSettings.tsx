@@ -16,7 +16,7 @@ export function CookieSettingsButton() {
       <button type="button" onClick={() => {
           setMap(readConsent().map);
           setOpen(true);
-        }} className="hover:text-cream underline-offset-2">
+        }} className="inline-flex min-h-10 items-center underline-offset-2 hover:text-cream md:min-h-0">
         Gestion des cookies
       </button>
       <Modal open={open} onClose={() => setOpen(false)} title="Cookies & services tiers">

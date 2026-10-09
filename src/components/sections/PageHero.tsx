@@ -53,17 +53,17 @@ export function PageHero({ eyebrow, title, lead, image, crumbs = [], actions, ac
       <div className="container-jungle relative pt-32 pb-14 md:pt-40 md:pb-20">
         {crumbs.length > 0 && (
           <>
-            <nav aria-label="Fil d’Ariane" className="animate-fade mb-6 text-sm text-cream/70">
+            <nav aria-label="Fil d’Ariane" className="animate-fade mb-4 text-sm text-cream/70 md:mb-6">
               <ol className="flex flex-wrap items-center gap-1.5">
                 {trail.map((c, i) => (
                   <li key={c.href} className="inline-flex items-center gap-1.5">
                     {i > 0 && <Icon name="chevron-right" size={14} className="text-cream/40" />}
                     {i === trail.length - 1 ? (
-                      <span aria-current="page" className="text-cream">
+                      <span aria-current="page" className="max-w-[60vw] truncate text-cream sm:max-w-none">
                         {c.name}
                       </span>
                     ) : (
-                      <Link href={c.href} className="hover:text-gold">
+                      <Link href={c.href} className="inline-flex min-h-10 items-center hover:text-gold md:min-h-0">
                         {c.name}
                       </Link>
                     )}

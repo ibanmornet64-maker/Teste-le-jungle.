@@ -48,7 +48,7 @@ export function PracticalInfo({ withTitle = true, detailedHours = false }: { wit
                 <br />
                 {SITE.address.postalCode} {SITE.address.city}
               </address>
-              <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1 font-semibold text-gold hover:underline">
+              <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1 font-semibold text-gold hover:underline relative after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']">
                 Itinéraire <Icon name="arrow-up-right" size={14} />
                 <span className="sr-only">(nouvel onglet)</span>
               </a>
@@ -62,13 +62,13 @@ export function PracticalInfo({ withTitle = true, detailedHours = false }: { wit
 
             <InfoCard icon="bowling" title="Activités">
               <p>{visibleActivities.filter((a) => a.count).map((a) => `${a.count} ${a.countLabel}`).join(" · ")}</p>
-              <Link href="/activites" className="mt-2 inline-flex items-center gap-1 font-semibold text-gold hover:underline">
+              <Link href="/activites" className="mt-2 inline-flex items-center gap-1 font-semibold text-gold hover:underline relative after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']">
                 Découvrir <Icon name="arrow-right" size={14} />
               </Link>
             </InfoCard>
 
             <InfoCard icon="instagram" title="Instagram">
-              <a href={SITE.social.instagram.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-gold hover:underline">
+              <a href={SITE.social.instagram.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-gold hover:underline relative after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']">
                 {SITE.social.instagram.handle}
                 <span className="sr-only"> (nouvel onglet)</span>
               </a>
@@ -77,7 +77,7 @@ export function PracticalInfo({ withTitle = true, detailedHours = false }: { wit
 
             {CONTACT.phone && (
               <InfoCard icon="phone" title="Téléphone">
-                <a href={phoneHref(CONTACT.phone)} className="font-semibold text-gold hover:underline">
+                <a href={phoneHref(CONTACT.phone)} className="font-semibold text-gold hover:underline relative after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']">
                   {CONTACT.phone}
                 </a>
               </InfoCard>

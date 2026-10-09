@@ -1,32 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { directionsUrl } from "@/config/site";
 import { cn } from "@/lib/format";
 import { getPrimaryAction, getSecondaryAction } from "@/lib/contact-actions";
 import Link from "next/link";
+import { usePastFold } from "@/lib/use-past-fold";
 
 /**
  * Barre d'actions fixe en bas d'écran sur mobile (accessible au pouce).
- * Apparaît après le premier écran. Itinéraire · contact principal · second contact.
+ * Apparaît après le premier écran (le bouton de contact du header disparaît
+ * alors sur mobile). Itinéraire · contact principal · second contact.
  */
 export function MobileActionBar() {
-  const [visible, setVisible] = useState(false);
+  const visible = usePastFold();
   const primary = getPrimaryAction();
   const secondary = getSecondaryAction();
-
-  useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.6);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   const tab = visible ? 0 : -1;
   const newTab = (external: boolean) => (external ? { target: "_blank", rel: "noopener noreferrer" } : {});
   const itemCls =
-    "flex min-h-14 flex-1 flex-col items-center justify-center gap-0.5 text-[0.7rem] font-semibold text-cream/85";
+    "flex min-h-14 flex-1 flex-col items-center justify-center gap-1 text-xs font-semibold text-cream/90 active:bg-cream/10";
 
   return (
     <div
@@ -51,7 +45,7 @@ export function MobileActionBar() {
           {...newTab(primary.external)}
           tabIndex={tab}
           aria-label={primary.label}
-          className="m-1.5 flex flex-[1.6] items-center justify-center gap-2 rounded-xl bg-orange text-sm font-bold text-night"
+          className="m-1.5 flex flex-[1.6] items-center justify-center gap-2 rounded-xl bg-orange text-[0.95rem] font-bold text-night active:scale-[0.98] motion-safe:transition-transform"
         >
           <Icon name={primary.icon} size={18} />
           {primary.shortLabel}

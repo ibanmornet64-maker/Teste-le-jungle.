@@ -34,7 +34,7 @@ export function InstagramLatest({ posts }: { posts: InstagramPost[] }) {
             Les dernières publications
           </h3>
         </div>
-        <ButtonLink href={url} variant="ghost" icon="arrow-up-right" className="-mx-6 sm:mx-0" ariaLabel={`Voir le compte ${handle} sur Instagram (nouvel onglet)`}>
+        <ButtonLink href={url} variant="ghost" icon="arrow-up-right" ariaLabel={`Voir le compte ${handle} sur Instagram (nouvel onglet)`}>
           {handle}
         </ButtonLink>
       </div>

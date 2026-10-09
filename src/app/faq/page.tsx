@@ -49,7 +49,7 @@ export default function FaqPage() {
                 <div className="px-6 pb-6 text-cream/80">
                   <p className="leading-relaxed">{item.answer}</p>
                   {item.link && (
-                    <Link href={item.link.href} className="mt-3 inline-flex items-center gap-1.5 font-semibold text-gold hover:underline">
+                    <Link href={item.link.href} className="mt-3 inline-flex items-center gap-1.5 font-semibold text-gold hover:underline relative after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']">
                       {item.link.label} <Icon name="arrow-right" size={16} />
                     </Link>
                   )}

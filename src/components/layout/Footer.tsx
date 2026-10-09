@@ -10,14 +10,14 @@ import { hasTemporaryMedia } from "@/data/images";
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative overflow-hidden bg-night pt-20 pb-28 md:pb-12">
+    <footer className="relative overflow-hidden bg-night pt-16 pb-28 md:pt-20 md:pb-12">
       {/* Motif végétal très discret */}
       <div aria-hidden className="leaf-pattern absolute inset-0 opacity-60" />
       <PalmFrond className="absolute -top-10 -left-24 h-[520px] -rotate-[30deg] text-jungle-dark/35" />
       <MonsteraLeaf className="absolute -right-20 -bottom-24 size-[420px] rotate-[-20deg] text-jungle-dark/30" />
 
       <div className="container-jungle relative">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.1fr]">
+        <div className="grid gap-10 md:grid-cols-2 md:gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1.1fr]">
           <div>
             <Logo size="lg" />
             <p className="mt-6 font-display text-2xl font-medium text-cream">{SITE.tagline}</p>
@@ -38,10 +38,14 @@ export function Footer() {
 
           <nav aria-label="Plan du site">
             <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-gold">Explorer</h2>
-            <ul className="space-y-2.5 text-sm">
+            {/* 2 colonnes sur mobile, avec des liens assez hauts pour le pouce */}
+            <ul className="grid grid-cols-2 gap-x-6 text-sm md:block md:space-y-2.5">
               {[...MAIN_NAV.slice(1), ...FOOTER_NAV].map((item) => (
                 <li key={item.href + item.label}>
-                  <Link href={item.href} className="text-cream/75 transition-colors hover:text-cream">
+                  <Link
+                    href={item.href}
+                    className="flex min-h-10 items-center text-cream/75 transition-colors hover:text-cream md:inline md:min-h-0"
+                  >
                     {item.label}
                   </Link>
                 </li>
@@ -86,7 +90,7 @@ export function Footer() {
                 href={directionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-semibold text-gold hover:underline"
+                className="inline-flex min-h-10 items-center gap-2 font-semibold text-gold hover:underline md:min-h-0"
                 aria-label={`Itinéraire vers ${fullAddress} (nouvel onglet)`}
               >
                 Voir l’itinéraire <Icon name="arrow-up-right" size={16} />
@@ -94,7 +98,7 @@ export function Footer() {
             </address>
           </div>
 
-          <div>
+          <div className="hidden sm:block">
             <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-gold">Sur place</h2>
             <ul className="space-y-2.5 text-sm text-cream/80">
               <li className="flex items-center gap-3">
@@ -116,15 +120,15 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-4 border-t border-cream/10 pt-8 text-xs text-cream/55 md:flex-row md:items-center md:justify-between">
+        <div className="mt-12 flex flex-col gap-3 border-t md:mt-16 md:gap-4 border-cream/10 pt-8 text-xs text-cream/55 md:flex-row md:items-center md:justify-between">
           <p>
             © {year} {SITE.name} · {SITE.address.city}
             {hasTemporaryMedia && <span className="block md:inline md:before:content-['_·_']">Visuels d’illustration</span>}
           </p>
-          <ul className="flex flex-wrap gap-x-5 gap-y-2">
+          <ul className="flex flex-wrap items-center gap-x-5">
             {LEGAL_NAV.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="hover:text-cream">
+                <Link href={item.href} className="inline-flex min-h-10 items-center hover:text-cream md:min-h-0">
                   {item.label}
                 </Link>
               </li>

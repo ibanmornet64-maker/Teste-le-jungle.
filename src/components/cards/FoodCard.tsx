@@ -22,7 +22,7 @@ export function FoodCategoryCard({
       style={{ ["--reveal-delay" as string]: `${delay}ms` }}
     >
       {category.image && (
-        <div className="img-zoom relative aspect-[4/3] overflow-hidden">
+        <div className="img-zoom relative aspect-[16/10] overflow-hidden sm:aspect-[4/3]">
           <Image
             src={category.image.src}
             alt={category.image.alt}

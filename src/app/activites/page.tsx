@@ -45,7 +45,7 @@ export default function ActivitiesPage() {
 
       {/* Sommaire rapide */}
       <nav aria-label="Aller à une activité" className="sticky top-[4.25rem] z-20 border-b border-cream/10 bg-deep/90 backdrop-blur-xl">
-        <ul className="container-jungle no-scrollbar flex gap-2 overflow-x-auto py-3">
+        <ul className="container-jungle no-scrollbar flex gap-2 overflow-x-auto py-3 max-sm:[mask-image:linear-gradient(to_right,black_85%,transparent)]">
           {visibleActivities.map((a) => (
             <li key={a.slug}>
               <Link

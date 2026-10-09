@@ -27,6 +27,14 @@ const sizes: Record<Size, string> = {
   lg: "min-h-14 px-7 text-base md:px-8 md:text-[1.05rem]",
 };
 
+/** Le bouton « ghost » n'a pas de fond : on retire la marge horizontale pour l'aligner sur le texte. */
+const ghostSizes: Record<Size, string> = {
+  sm: "min-h-10 px-1 text-sm",
+  md: "min-h-12 px-1 text-[0.95rem]",
+  lg: "min-h-14 px-1 text-base md:text-[1.05rem]",
+};
+const sizeClass = (variant: Variant, size: Size) => (variant === "ghost" ? ghostSizes : sizes)[size];
+
 type CommonProps = {
   variant?: Variant;
   size?: Size;
@@ -72,7 +80,7 @@ export function ButtonLink({
   ariaLabel,
   ...rest
 }: LinkButtonProps) {
-  const classes = cn(base, variants[variant], sizes[size], className);
+  const classes = cn(base, variants[variant], sizeClass(variant, size), className);
   const isExternal = external ?? /^https?:\/\//.test(href);
   if (isExternal) {
     return (
@@ -113,7 +121,7 @@ export function Button({
   ...props
 }: CommonProps & Omit<ComponentProps<"button">, "children">) {
   return (
-    <button className={cn(base, variants[variant], sizes[size], className)} {...props}>
+    <button className={cn(base, variants[variant], sizeClass(variant, size), className)} {...props}>
       <Content icon={icon} iconPosition={iconPosition}>
         {children}
       </Content>

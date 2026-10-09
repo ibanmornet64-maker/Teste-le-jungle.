@@ -67,7 +67,7 @@ export function MapEmbed({ className }: { className?: string }) {
           </div>
           <button
             type="button"
-            className="relative text-xs text-cream/55 underline-offset-2 hover:text-cream hover:underline"
+            className="relative text-xs text-cream/55 underline-offset-2 after:absolute after:-inset-x-2 after:-inset-y-3 after:content-[''] hover:text-cream hover:underline"
             onClick={() => writeConsent({ map: true })}
           >
             Toujours afficher la carte sur cet appareil

@@ -50,19 +50,21 @@ export default function GroupsPage() {
             title="Petits groupes, grandes tablées"
             intro="Chaque demande est étudiée par l’équipe du Jungle pour vous proposer une solution adaptée."
           />
-          <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-10 grid gap-3 sm:mt-12 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
             {GROUP_SEGMENTS.map((s, i) => (
               <li
                 key={s.id}
-                className="group rounded-[1.5rem] border border-cream/10 bg-jungle-dark/50 p-6 transition-colors hover:border-orange/50"
+                className="group flex gap-4 rounded-[1.5rem] border border-cream/10 bg-jungle-dark/50 p-5 transition-colors hover:border-orange/50 sm:block sm:p-6"
                 data-reveal
                 style={{ ["--reveal-delay" as string]: `${(i % 4) * 70}ms` }}
               >
-                <span className="flex size-12 items-center justify-center rounded-2xl bg-cream/10 text-gold transition-colors group-hover:bg-orange group-hover:text-night">
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-cream/10 text-gold transition-colors group-hover:bg-orange group-hover:text-night">
                   <Icon name={s.icon} size={24} />
                 </span>
-                <h3 className="mt-5 font-sans text-lg font-semibold text-cream">{s.label}</h3>
-                <p className="mt-2 text-sm text-cream/70">{s.text}</p>
+                <div>
+                  <h3 className="font-sans text-lg font-semibold text-cream sm:mt-5">{s.label}</h3>
+                  <p className="mt-1 text-sm text-cream/70 sm:mt-2">{s.text}</p>
+                </div>
               </li>
             ))}
           </ul>
@@ -82,17 +84,19 @@ export default function GroupsPage() {
         </div>
       </section>
 
-      <section className="bg-sand py-20 text-night md:py-24" aria-labelledby="etapes-title">
+      <section className="bg-sand py-16 text-night md:py-24" aria-labelledby="etapes-title">
         <div className="container-jungle">
           <SectionTitle id="etapes-title" tone="light" eyebrow="Comment ça marche ?" title="Simple comme un strike" align="center" className="mx-auto" />
-          <ol className="mt-12 grid gap-6 md:grid-cols-3">
+          <ol className="mt-10 grid gap-3 sm:gap-4 md:mt-12 md:grid-cols-3 md:gap-6">
             {STEPS.map((s, i) => (
-              <li key={s.title} className="relative rounded-[1.5rem] bg-cream p-7 shadow-[0_20px_40px_-30px_rgb(16_21_18/0.6)]" data-reveal style={{ ["--reveal-delay" as string]: `${i * 90}ms` }}>
-                <span className="flex size-12 items-center justify-center rounded-full bg-jungle-dark font-display text-xl font-semibold text-gold">
+              <li key={s.title} className="relative flex gap-4 rounded-[1.5rem] bg-cream p-5 shadow-[0_20px_40px_-30px_rgb(16_21_18/0.6)] sm:p-7 md:block" data-reveal style={{ ["--reveal-delay" as string]: `${i * 90}ms` }}>
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-jungle-dark font-display text-xl font-semibold text-gold md:size-12">
                   {i + 1}
                 </span>
-                <h3 className="mt-5 text-2xl font-semibold text-deep">{s.title}</h3>
-                <p className="mt-2 text-night/75">{s.text}</p>
+                <div>
+                  <h3 className="text-xl font-semibold text-deep md:mt-5 md:text-2xl">{s.title}</h3>
+                  <p className="mt-1 text-night/75 md:mt-2">{s.text}</p>
+                </div>
               </li>
             ))}
           </ol>

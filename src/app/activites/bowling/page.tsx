@@ -57,12 +57,14 @@ export default function BowlingPage() {
       <section className="section-y bg-night" aria-labelledby="occasions-title">
         <div className="container-jungle">
           <SectionTitle id="occasions-title" eyebrow="Pour toutes les occasions" title="Un strike pour chaque sortie" align="center" className="mx-auto" />
-          <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-10 grid gap-3 sm:mt-12 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
             {OCCASIONS.map((o, i) => (
-              <li key={o.title} className="rounded-[1.5rem] border border-cream/10 bg-jungle-dark/60 p-6" data-reveal style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}>
-                <Icon name={o.icon} size={30} className="text-gold" />
-                <h3 className="mt-4 text-2xl font-semibold text-cream">{o.title}</h3>
-                <p className="mt-2 text-sm text-cream/75">{o.text}</p>
+              <li key={o.title} className="flex gap-4 rounded-[1.5rem] border border-cream/10 bg-jungle-dark/60 p-5 sm:block sm:p-6" data-reveal style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}>
+                <Icon name={o.icon} size={30} className="mt-0.5 shrink-0 text-gold" />
+                <div>
+                  <h3 className="text-xl font-semibold text-cream sm:mt-4 sm:text-2xl">{o.title}</h3>
+                  <p className="mt-1 text-sm text-cream/75 sm:mt-2">{o.text}</p>
+                </div>
               </li>
             ))}
           </ul>

@@ -51,21 +51,21 @@ export default function ConceptPage() {
             title="Chacun crée sa propre expérience"
             intro="Bowling, billard, fléchettes, pinsas, tapas, goûters, cocktails et soirées : ici, pas de programme imposé. On passe pour un goûter, on reste pour une partie, on prolonge pour la soirée."
           />
-          <ul className="mt-14 grid gap-5 md:grid-cols-3">
+          <ul className="mt-10 grid gap-4 sm:mt-14 sm:gap-5 md:grid-cols-3">
             {PILLARS.map((p, i) => (
               <li
                 key={p.title}
-                className="relative overflow-hidden rounded-[1.75rem] border border-cream/10 bg-jungle-dark/60 p-8"
+                className="relative overflow-hidden rounded-[1.75rem] border border-cream/10 bg-jungle-dark/60 p-6 sm:p-8"
                 data-reveal
                 style={{ ["--reveal-delay" as string]: `${i * 90}ms` }}
               >
                 <span className="absolute -top-6 -right-4 font-display text-[7rem] leading-none font-semibold text-cream/[0.04]" aria-hidden>
                   0{i + 1}
                 </span>
-                <span className="flex size-14 items-center justify-center rounded-2xl bg-orange text-night">
-                  <Icon name={p.icon} size={28} />
+                <span className="flex size-12 items-center justify-center rounded-2xl bg-orange text-night sm:size-14">
+                  <Icon name={p.icon} size={26} />
                 </span>
-                <h3 className="mt-6 text-3xl font-semibold text-cream">{p.title}</h3>
+                <h3 className="mt-5 text-2xl font-semibold text-cream sm:mt-6 sm:text-3xl">{p.title}</h3>
                 <p className="mt-3 text-cream/75">{p.text}</p>
               </li>
             ))}

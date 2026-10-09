@@ -11,6 +11,7 @@ import { MAIN_NAV } from "@/config/navigation";
 import { CONTACT, SITE, directionsUrl } from "@/config/site";
 import { cn } from "@/lib/format";
 import { getPrimaryAction, getSecondaryAction } from "@/lib/contact-actions";
+import { usePastFold } from "@/lib/use-past-fold";
 import { useFocusTrap } from "@/lib/use-focus-trap";
 
 const isActive = (pathname: string, href: string) =>
@@ -22,6 +23,9 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const cta = getPrimaryAction();
+  // Sur mobile, au-delà du premier écran (ou menu ouvert, qui a son propre bouton),
+  // le bouton de contact du header s'efface : jamais de doublon.
+  const pastFold = usePastFold();
   const secondary = getSecondaryAction();
   const close = useCallback(() => setOpen(false), []);
 
@@ -108,7 +112,10 @@ export function Header() {
               size="sm"
               icon={cta.icon}
               iconPosition="left"
-              className="px-4 sm:px-5 md:min-h-11 md:px-6 md:text-[0.95rem]"
+              className={cn(
+                "px-4 transition-[opacity,visibility,transform,box-shadow,background-color] sm:px-5 md:min-h-11 md:px-6 md:text-[0.95rem]",
+                (pastFold || open) && "max-md:invisible max-md:scale-95 max-md:opacity-0",
+              )}
               ariaLabel={cta.label}
             >
               {cta.shortLabel}
