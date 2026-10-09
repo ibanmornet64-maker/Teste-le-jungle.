@@ -52,6 +52,11 @@ export default function PrivacyPage() {
           « Gestion des cookies » en bas de page.
         </p>
         <p>
+          Les dernières publications de notre compte Instagram affichées sur la page d’accueil sont récupérées par le
+          site lui-même, puis servies depuis notre hébergeur : leur affichage ne transmet aucune information à Instagram
+          et ne dépose aucun cookie.
+        </p>
+        <p>
           Les liens vers Instagram ou Google Maps ouvrent ces services dans un nouvel onglet ; leurs propres politiques
           de confidentialité s’appliquent alors.
         </p>

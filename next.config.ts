@@ -54,6 +54,13 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     qualities: [70, 75, 80],
     minimumCacheTTL: 60 * 60 * 24 * 30,
+    // Vignettes des publications Instagram (flux Behold). Elles sont optimisées
+    // et servies depuis le site lui-même : le navigateur du visiteur ne contacte
+    // ni Instagram ni Behold.
+    remotePatterns: [
+      { protocol: "https", hostname: "behold.pictures" },
+      { protocol: "https", hostname: "**.behold.pictures" },
+    ],
   },
   // Ancienne page de réservation (formulaire supprimé) → page contact.
   async redirects() {

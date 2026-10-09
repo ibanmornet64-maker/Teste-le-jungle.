@@ -221,6 +221,13 @@ const paths = {
     </>
   ),
   expand: <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />,
+  play: <path d="M8 5.5v13l10.5-6.5Z" fill="currentColor" stroke="none" />,
+  album: (
+    <>
+      <rect x="7.5" y="7.5" width="12" height="12" rx="2.5" />
+      <path d="M16.5 4.5h-9a3 3 0 0 0-3 3v9" />
+    </>
+  ),
 } as const;
 
 export type IconName = keyof typeof paths;

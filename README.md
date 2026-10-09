@@ -51,6 +51,7 @@ Le projet est prêt pour Vercel : aucune configuration technique à faire, Verce
 | Variable | Quand la remplir |
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | Quand vous aurez un nom de domaine, ex. `https://www.lejungle64.fr`. Si vide, l'adresse `.vercel.app` est utilisée automatiquement pour le SEO et le sitemap. |
+| `INSTAGRAM_FEED_URL` | Pour afficher automatiquement les 4 dernières publications Instagram sur l'accueil (voir section 6 bis). |
 | `SITE_NOINDEX` | `true` pour cacher le site de Google, par exemple tant que les photos temporaires sont en place. À retirer pour le lancement. |
 
 ### Brancher un nom de domaine
@@ -63,7 +64,7 @@ Le projet est prêt pour Vercel : aucune configuration technique à faire, Verce
 - Prévisualisations en `noindex` et `robots.txt` bloquant.
 - En-têtes de sécurité complets en ligne : `X-Frame-Options`, `frame-ancestors`, HSTS.
 - Optimisation d'images AVIF/WebP par Vercel.
-- **Toutes les pages sont statiques** (générées au build), sans API ni fonction serveur.
+- **Toutes les pages sont statiques** (générées au build), sans API ni fonction serveur. Seule exception, si le flux Instagram est activé : la page d'accueil se régénère d'elle-même au plus une fois par heure (géré par Vercel, rien à configurer).
 - Les événements passés sont masqués directement dans le navigateur des visiteurs : ils disparaissent le lendemain, sans redéploiement.
 - Version de Node déclarée dans `package.json` (`engines`).
 
@@ -196,6 +197,28 @@ Le site ne collecte ni n'enregistre aucune donnée. Les boutons ouvrent directem
 - Le **bouton principal** (header, hero, barre mobile, bas de page, activités) prend automatiquement le premier disponible de cette liste. Aujourd'hui, c'est **« Envoyer un message sur Instagram »** ; dès que le téléphone sera renseigné dans `data-to-confirm.ts`, ce sera **« Appeler »**, avec Instagram en second choix.
 - Les pages **Contact** et **Groupes** présentent tous les moyens de contact, la liste des infos à préciser (date, nombre de personnes, activités…) et, pour les groupes, un **message type à copier** en un clic.
 - Le texte de ces boutons se modifie dans `src/lib/contact-actions.ts`.
+
+## 6 bis. Dernières publications Instagram (automatique)
+
+Dans la section **« La jungle by night »** de l'accueil, un bloc « Les dernières publications » affiche les **4 derniers posts** de @lejungle64 (photo, date, début de la légende, icône Reel ou carrousel). Chaque vignette ouvre le post sur Instagram. Quand Le Jungle publie un nouveau post, il apparaît tout seul, sans toucher au site.
+
+**Mise en place (10 minutes, une seule fois, gratuit) :**
+
+1. Créer un compte gratuit sur **https://behold.so** (bouton *Sign up*).
+2. *Sources* → **+ Add source** → **Basic source** → **Connect**, puis se connecter avec le compte Instagram **@lejungle64** et accepter **toutes** les autorisations.
+3. *Feeds* → **Add feed** → *User feed* → choisir @lejungle64 → **JSON** → **Create feed**.
+4. Dans les réglages du flux : *Number of posts* = 4 (ou 6). Laisser **Domain whitelist vide** : le flux est lu par le serveur, pas par le navigateur.
+5. Copier l'URL du flux (du type `https://feeds.behold.so/AbCdEf123456`).
+6. Sur Vercel : *Settings → Environment Variables* → ajouter **`INSTAGRAM_FEED_URL`** avec cette URL → **Redeploy**.
+   (Variante : la coller dans `instagramFeedUrl` de `src/config/data-to-confirm.ts`.)
+
+**Bon à savoir :**
+- **Délai d'affichage** : avec la formule gratuite, Behold met le flux à jour **une fois par jour**, et le site se rafraîchit au plus une fois par heure. Un nouveau post apparaît donc en **24 h maximum**. La formule Starter de Behold (10 $/mois) passe à une mise à jour par heure.
+- **Limite gratuite** (1 200 lectures/mois) : le site lit le flux au plus une fois par heure (< 750 lectures/mois), quel que soit le nombre de visiteurs. Aucun risque de dépassement.
+- **Respect de la vie privée et rapidité** : les images sont optimisées puis servies par le site lui-même. Aucun script Instagram, aucun cookie, et le navigateur des visiteurs ne contacte ni Instagram ni Behold.
+- **Masquer un post** : le retirer depuis le tableau de bord Behold (ou filtrer par mot-clé dans les réglages du flux).
+- **Sécurité** : seuls les liens instagram.com et les images du CDN Behold sont acceptés. Si le flux est absent ou en panne, le bloc disparaît simplement : jamais de bloc vide ni de message d'erreur.
+- Code : `src/lib/instagram.ts` (lecture du flux) et `src/components/sections/InstagramLatest.tsx` (affichage).
 
 ---
 

@@ -53,6 +53,15 @@ export const DATA_TO_CONFIRM = {
    */
   reservationUrl: null as string | null,
 
+  /**
+   * Flux Instagram (Behold.so, gratuit) : affiche automatiquement les
+   * 4 dernières publications de @lejungle64 dans la section « La jungle by night ».
+   * Coller ici l'URL du flux JSON, ex. "https://feeds.behold.so/AbCdEf123456",
+   * OU (recommandé) la définir sur Vercel dans la variable INSTAGRAM_FEED_URL.
+   * Vide : le bloc n'apparaît pas. Mode d'emploi : README, section 6 bis.
+   */
+  instagramFeedUrl: null as string | null,
+
   /** Tarifs par activité (texte libre, ex. "6 € la partie") */
   prices: { bowling: null, billard: null, flechettes: null } as Prices,
 
@@ -130,6 +139,7 @@ export const DATA_TO_CONFIRM_LABELS: Record<string, string> = {
   email: "Email",
   siteUrl: "Nom de domaine",
   reservationUrl: "URL de réservation en ligne",
+  instagramFeedUrl: "Flux Instagram (4 dernières publications)",
   prices: "Tarifs des activités",
   durations: "Durées indicatives",
   generalHoursConfirmed: "Horaires généraux (15 h – 00 h)",

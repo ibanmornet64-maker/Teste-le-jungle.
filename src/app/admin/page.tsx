@@ -10,6 +10,7 @@ import { EVENTS } from "@/data/events";
 import { IMAGES } from "@/data/images";
 import { MENU } from "@/data/menu";
 import { getBrandLogo } from "@/lib/brand";
+import { getInstagramFeedUrl } from "@/lib/instagram";
 
 export const metadata: Metadata = {
   title: "Administration — informations à confirmer",
@@ -32,7 +33,9 @@ export default function AdminPage() {
 
   const entries = Object.entries(DATA_TO_CONFIRM);
   // Le logo peut aussi être détecté automatiquement dans /public/brand/.
-  const filled = (key: string, v: unknown) => (key === "officialLogo" ? getBrandLogo() !== null : isFilled(v));
+  // Le flux Instagram peut aussi venir de la variable d'environnement INSTAGRAM_FEED_URL.
+  const filled = (key: string, v: unknown) =>
+    key === "officialLogo" ? getBrandLogo() !== null : key === "instagramFeedUrl" ? getInstagramFeedUrl() !== null : isFilled(v);
   const missing = entries.filter(([k, v]) => !filled(k, v)).length;
   const tempImages = Object.entries(IMAGES).filter(([, img]) => img?.temporary);
   const emptySlots = Object.entries(IMAGES).filter(([, img]) => img === null);

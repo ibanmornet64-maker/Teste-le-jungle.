@@ -4,6 +4,8 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import { Glow, PalmFrond } from "@/components/decor/Foliage";
 import { SITE } from "@/config/site";
 import { getUpcomingEvents } from "@/data/events";
+import { getLatestInstagramPosts } from "@/lib/instagram";
+import { InstagramLatest } from "./InstagramLatest";
 import { UpcomingEventsGrid } from "./UpcomingOnly";
 
 /** État vide élégant, réutilisé sur la page Événements. */
@@ -27,8 +29,10 @@ export function EventsEmptyState() {
   );
 }
 
-export function EventsPreview() {
+export async function EventsPreview() {
   const events = getUpcomingEvents().slice(0, 3);
+  // 4 dernières publications Instagram (bloc masqué si le flux n'est pas configuré)
+  const posts = await getLatestInstagramPosts(4);
   return (
     <section aria-labelledby="events-title" className="section-y relative overflow-hidden bg-night">
       <div className="container-jungle relative">
@@ -58,6 +62,8 @@ export function EventsPreview() {
         <div className="mt-12">
           <UpcomingEventsGrid events={events} empty={<EventsEmptyState />} />
         </div>
+
+        <InstagramLatest posts={posts} />
       </div>
     </section>
   );
